@@ -67,10 +67,16 @@ function createHero() {
 }
 
 function searchHero() {
-  createHeroButton.style.display = 'none';
-  const searchPreview = document.createElement('div');
-  searchPreview.className = 'search-preview';
+  let searchPreview = document.getElementById('searchPreview');
 
-  heroSearchContainer.insertBefore(searchPreview, searchBar);
-  searchBar.style.animation = 'slideDown 0.5s ease-out forwards '
+  if (!searchPreview) {
+    createHeroButton.style.display = 'none';
+
+    searchPreview = document.createElement('div');
+    searchPreview.id = 'searchPreview';
+    searchPreview.className = 'search-preview';
+    heroSearchContainer.insertBefore(searchPreview, searchBar);
+  }
+
+  searchBar.style.animation = 'slideDown 0.5s ease-out forwards';
 }
