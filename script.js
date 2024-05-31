@@ -60,10 +60,30 @@ function createHero() {
     heroIndividualAttribute3
   );
 
+
+const shuffleContainer = document.createElement('div');
+shuffleContainer.className = 'shuffle-container';
+
+ createHeroSection.append(shuffleContainer);
+
+
+ const heroShuffleIcon = document.createElement('i');
+ heroShuffleIcon.className = 'hero-shuffle-icon material-icons shuffle';
+ heroShuffleIcon.textContent = 'shuffle';
+ shuffleContainer.append(heroShuffleIcon);
+ 
+
+
+
+const heroPictureWraper = document.createElement('div');
+heroPictureWraper.className = 'hero-picture-wraper'
+createHeroSection.insertBefore(heroPictureWraper,heroAttributes);
+
+
   const heroPicture = document.createElement('div');
   heroPicture.className = 'hero-picture';
 
-  createHeroSection.append(heroPicture);
+  heroPictureWraper.append(heroPicture);
 }
 
 function searchHero() {

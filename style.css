@@ -47,11 +47,11 @@
 
 .hero-skills {
   width: 97%;
-  top: 80%;
+  top: 81.5%;
   position: absolute;
-  height: 100%;
   display: flex;
   justify-content: space-around;
+  padding: 25px;
 }
 
 .hero-card:hover {
@@ -110,8 +110,14 @@
   text-align: center;
   font-size: 1rem;
   background-color: rgb(50, 60, 76);
-  height: 100px;
+  height: 70px;
   width: 70px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 300ms ease;
+}
+.individual-skill:hover {
+  transform: scale(90%);
 }
 
 .skill-title {
@@ -130,19 +136,26 @@
 .create-hero-section {
   width: 100%;
   height: 600px;
-  background-color: rgba(0, 0, 255, 0.26);
+  background: rgba(15, 51, 70, 0.58);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.3px);
+  -webkit-backdrop-filter: blur(8.3px);
+  border: 1px solid rgba(15, 51, 70, 0.26);
   margin-bottom: 20px;
   position: relative;
   display: flex;
   justify-content: center;
+  border-radius: 10px;
+  align-items: center;
 }
 
 .hero-attributes {
   width: 70%;
   height: 50px;
-  background-color: pink;
+  /*  background-color: pink; */
   display: flex;
-  transform: translateY(350px);
+  transform: translateY(120px);
   position: absolute;
   justify-content: space-around;
   padding-left: 50px;
@@ -163,8 +176,16 @@
   width: 200px;
   height: 200px;
   background-color: yellow;
-  margin-top: 65px;
   border-radius: 100%;
+}
+
+.hero-picture-wraper {
+  width: 100%;
+  transform: translateY(-150px);
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: absolute;
 }
 
 .search-preview {
@@ -175,6 +196,24 @@
   border-radius: 10px;
   opacity: 0; /* Inicia invisível */
   animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.shuffle-container {
+  margin-top: 70px;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-shuffle-icon {
+  font-size: 36px;
+  transition: transform 300ms ease;
+  cursor: pointer;
+  color: rgb(50, 60, 76);
+}
+.hero-shuffle-icon:hover {
+  transform: scale(90%);
 }
 
 @keyframes fadeInUp {
