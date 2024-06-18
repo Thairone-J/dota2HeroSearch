@@ -11,7 +11,9 @@ document.getElementById('createHeroButton').addEventListener('click', function (
 document.getElementById('searchButton').addEventListener('click', function () {
   searchHero();
 });
-result3;
+
+
+
 function createHero() {
   searchBar.style.animation = 'slideDown2 0.7s ease-out forwards';
   const createHeroSection = document.createElement('div');
