@@ -1,61 +1,39 @@
 import { heroes } from './heroes.js';
 
-const createHeroButton = document.getElementById('createHeroButton');
+const showHeroEditorButton = document.getElementById('showHeroEditorButton');
 const heroSearchContainer = document.getElementById('heroSearchContainer');
 const searchBar = document.getElementById('searchBar');
 
-document.getElementById('createHeroButton').addEventListener('click', function () {
-  createHero();
+document.getElementById('showHeroEditorButton').addEventListener('click', function () {
+  showHeroEditor();
 });
 
 document.getElementById('searchButton').addEventListener('click', function () {
   searchHero();
 });
 
-function createHero() {
+function showHeroEditor() {
   renderHeroCard();
 }
 
 function searchHero() {
-  let searchPreview = document.getElementById('searchPreview');
-
-  if (!searchPreview) {
-    createHeroButton.style.display = 'none';
-
-    searchPreview = document.createElement('div');
-    searchPreview.id = 'searchPreview';
-    searchPreview.className = 'search-preview';
-    heroSearchContainer.insertBefore(searchPreview, searchBar);
-
-    const result = document.createElement('div');
-    result.className = 'result';
-
-    const result2 = document.createElement('div');
-    result2.className = 'result2';
-
-    const result3 = document.createElement('div');
-    result3.className = 'result3';
-
-    searchPreview.append(result, result2, result3);
-  }
-
-  searchBar.style.animation = 'slideDown 0.5s ease-out forwards';
+  renderSearchPreview();
 }
 
 function renderHeroCard() {
   searchBar.style.animation = 'slideDown2 0.7s ease-out forwards';
 
-  const createHeroSection = document.createElement('div');
-  createHeroSection.id = 'createHeroSection';
-  createHeroSection.className = 'create-hero-section';
+  const heroEditorSection = document.createElement('div');
+  heroEditorSection.id = 'heroEditorSection';
+  heroEditorSection.className = 'hero-editor-section';
 
-  createHeroButton.style.display = 'none';
+  showHeroEditorButton.style.display = 'none';
 
-  heroSearchContainer.insertBefore(createHeroSection, searchBar);
+  heroSearchContainer.insertBefore(heroEditorSection, searchBar);
 
   const heroSkills = document.createElement('div');
   heroSkills.className = 'hero-skills';
-  createHeroSection.appendChild(heroSkills);
+  heroEditorSection.appendChild(heroSkills);
 
   for (let i = 0; i < 4; i++) {
     const individualSkill = document.createElement('div');
@@ -65,7 +43,7 @@ function renderHeroCard() {
 
   const heroAttributes = document.createElement('div');
   heroAttributes.className = 'hero-attributes';
-  createHeroSection.insertBefore(heroAttributes, heroSkills);
+  heroEditorSection.insertBefore(heroAttributes, heroSkills);
 
   for (let i = 0; i < 3; i++) {
     const heroIndividualAttribute = document.createElement('div');
@@ -76,7 +54,7 @@ function renderHeroCard() {
   const shuffleContainer = document.createElement('div');
   shuffleContainer.className = 'shuffle-container';
 
-  createHeroSection.append(shuffleContainer);
+  heroEditorSection.append(shuffleContainer);
 
   const heroShuffleIcon = document.createElement('i');
   heroShuffleIcon.className = 'hero-shuffle-icon material-icons shuffle';
@@ -85,10 +63,46 @@ function renderHeroCard() {
 
   const heroPictureWraper = document.createElement('div');
   heroPictureWraper.className = 'hero-picture-wraper';
-  createHeroSection.insertBefore(heroPictureWraper, heroAttributes);
+  heroEditorSection.insertBefore(heroPictureWraper, heroAttributes);
 
   const heroPicture = document.createElement('div');
   heroPicture.className = 'hero-picture';
 
   heroPictureWraper.append(heroPicture);
+}
+
+function renderSearchPreview() {
+  let searchPreview = document.getElementById('searchPreview');
+
+  if (!searchPreview) {
+    showHeroEditorButton.style.display = 'none';
+
+    searchPreview = document.createElement('div');
+    searchPreview.id = 'searchPreview';
+    searchPreview.className = 'search-preview';
+    heroSearchContainer.insertBefore(searchPreview, searchBar);
+
+    for (let i = 0; i < 3; i++) {
+      const result = document.createElement('div');
+      result.className = 'result';
+      searchPreview.appendChild(result);
+
+      const resultPictureSection = document.createElement('div');
+      resultPictureSection.className = 'result-picture-section';
+      result.appendChild(resultPictureSection);
+
+      const resultPicture = document.createElement('div');
+      resultPicture.className = 'result-picture';
+      resultPictureSection.appendChild(resultPicture);
+
+      const resultTitleSection = document.createElement('div');
+      resultTitleSection.className = 'result-title-section';
+      result.appendChild(resultTitleSection);
+
+      const resultTitle = document.createElement('div');
+      resultTitle.className = 'result-title';
+      resultTitleSection.appendChild(resultTitle);
+    }
+  }
+  searchBar.style.animation = 'slideDown 0.5s ease-out forwards';
 }
