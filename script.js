@@ -13,57 +13,87 @@ document.getElementById('searchButton').addEventListener('click', function () {
 });
 
 function showHeroEditor() {
-  renderEditHeroSection();
+  renderHeroCard(); 
 }
 
 function searchHero() {
   renderSearchPreview();
 }
 
-function renderEditHeroSection() {
-  // searchBar.style.animation = 'slideDown2 0.7s ease-out forwards';
-  searchBar.style.display = 'none';
-  const heroEditorSection = document.createElement('div');
-  heroEditorSection.id = 'heroEditorSection';
-  heroEditorSection.className = 'hero-editor-section';
+function renderHeroCard() {
+  const heroCard = document.createElement('div');
+  heroCard.className = 'hero-card';
+  heroCard.id = 'heroCard';
 
-  showHeroEditorButton.style.display = 'none';
+  const searchPreview = document.getElementById('searchPreview');
+  const searchBar = document.getElementById('searchBar');
+  const showHeroEditorButton = document.getElementById('showHeroEditorButton');
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
 
-  heroPreviewContainer.insertBefore(heroEditorSection, searchBar);
+  const elements = [searchPreview, searchBar, showHeroEditorButton];
 
+  elements.forEach((element) => {
+    if (element) {
+      element.style.display = 'none';
+    }
+  });
+
+  heroPreviewContainer.appendChild(heroCard);
+  renderSkills();
+  renderAttributes();
+  renderShuffleButton();
+  renderPicture();
+}
+
+function renderSkills() {
+  const heroCard = document.getElementById('heroCard');
   const heroSkills = document.createElement('div');
   heroSkills.className = 'hero-skills';
-  heroEditorSection.appendChild(heroSkills);
+  heroSkills.id = 'heroSkills';
+  heroCard.appendChild(heroSkills);
 
   for (let i = 0; i < 4; i++) {
     const individualSkill = document.createElement('div');
     individualSkill.className = 'individual-skill';
     heroSkills.appendChild(individualSkill);
   }
+}
 
+function renderAttributes() {
+  const heroCard = document.getElementById('heroCard');
+  const heroSkills = document.getElementById('heroSkills');
   const heroAttributes = document.createElement('div');
   heroAttributes.className = 'hero-attributes';
-  heroEditorSection.insertBefore(heroAttributes, heroSkills);
+  heroAttributes.id = 'heroAttributes';
+  heroCard.insertBefore(heroAttributes, heroSkills);
 
   for (let i = 0; i < 3; i++) {
     const heroIndividualAttribute = document.createElement('div');
     heroIndividualAttribute.className = 'hero-indivudal-attribute';
     heroAttributes.appendChild(heroIndividualAttribute);
   }
+}
+
+function renderShuffleButton() {
+  const heroCard = document.getElementById('heroCard');
 
   const shuffleContainer = document.createElement('div');
   shuffleContainer.className = 'shuffle-container';
 
-  heroEditorSection.append(shuffleContainer);
+  heroCard.append(shuffleContainer);
 
   const heroShuffleIcon = document.createElement('i');
   heroShuffleIcon.className = 'hero-shuffle-icon material-icons shuffle';
   heroShuffleIcon.textContent = 'shuffle';
   shuffleContainer.append(heroShuffleIcon);
+}
 
+function renderPicture() {
+  const heroCard = document.getElementById('heroCard');
+  const heroAttributes = document.getElementById('heroAttributes');
   const heroPictureWraper = document.createElement('div');
   heroPictureWraper.className = 'hero-picture-wraper';
-  heroEditorSection.insertBefore(heroPictureWraper, heroAttributes);
+  heroCard.insertBefore(heroPictureWraper, heroAttributes);
 
   const heroPicture = document.createElement('div');
   heroPicture.className = 'hero-picture';
@@ -105,22 +135,10 @@ function renderSearchPreview() {
       resultTitle.className = 'result-title';
       resultTitleSection.appendChild(resultTitle);
 
-      result.addEventListener('click' ,function(){
-        renderHeroCard()
-      })
+      result.addEventListener('click', function () {
+        renderHeroCard();
+      });
     }
   }
   searchBar.style.animation = 'slideDown 0.5s ease-out forwards';
-}
-
-function renderHeroCard() {
-  const heroCard = document.createElement('div');
-  heroCard.className = 'hero-card';
-
-  let searchPreview = document.getElementById('searchPreview');
-  let searchBar = document.getElementById('searchBar');
-  searchPreview.style.display = 'none';
-  searchBar.style.display = 'none';
-
-  heroPreviewContainer.appendChild(heroCard);
 }
