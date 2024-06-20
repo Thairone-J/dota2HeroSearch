@@ -1,7 +1,7 @@
 import { heroes } from './heroes.js';
 
 const showHeroEditorButton = document.getElementById('showHeroEditorButton');
-const heroSearchContainer = document.getElementById('heroSearchContainer');
+const heroPreviewContainer = document.getElementById('heroPreviewContainer');
 const searchBar = document.getElementById('searchBar');
 
 document.getElementById('showHeroEditorButton').addEventListener('click', function () {
@@ -29,7 +29,7 @@ function renderEditHeroSection() {
 
   showHeroEditorButton.style.display = 'none';
 
-  heroSearchContainer.insertBefore(heroEditorSection, searchBar);
+  heroPreviewContainer.insertBefore(heroEditorSection, searchBar);
 
   const heroSkills = document.createElement('div');
   heroSkills.className = 'hero-skills';
@@ -80,7 +80,7 @@ function renderSearchPreview() {
     searchPreview = document.createElement('div');
     searchPreview.id = 'searchPreview';
     searchPreview.className = 'search-preview';
-    heroSearchContainer.insertBefore(searchPreview, searchBar);
+    heroPreviewContainer.insertBefore(searchPreview, searchBar);
 
     for (let i = 0; i < 3; i++) {
       const result = document.createElement('div');
@@ -122,5 +122,5 @@ function renderHeroCard() {
   searchPreview.style.display = 'none';
   searchBar.style.display = 'none';
 
-  heroSearchContainer.appendChild(heroCard);
+  heroPreviewContainer.appendChild(heroCard);
 }
