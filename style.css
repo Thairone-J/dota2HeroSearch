@@ -43,7 +43,6 @@
   transition: transform 0.5s ease, box-shadow 0.5s ease;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   position: relative;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   overflow: hidden;
@@ -121,7 +120,7 @@
   transition: transform 300ms ease;
 }
 .individual-skill:hover {
-  transform: scale(90%);
+  transform: scale(97%);
 }
 
 .skill-title {

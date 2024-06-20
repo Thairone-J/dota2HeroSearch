@@ -79,6 +79,7 @@ function renderShuffleButton() {
 
   const shuffleContainer = document.createElement('div');
   shuffleContainer.className = 'shuffle-container';
+  shuffleContainer.id = 'shuffleContainer'
 
   heroCard.append(shuffleContainer);
 
@@ -137,6 +138,8 @@ function renderSearchPreview() {
 
       result.addEventListener('click', function () {
         renderHeroCard();
+        const shuffleContainer = document.getElementById('shuffleContainer');
+        shuffleContainer.style.display = 'none'
       });
     }
   }
