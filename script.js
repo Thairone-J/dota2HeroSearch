@@ -13,16 +13,16 @@ document.getElementById('searchButton').addEventListener('click', function () {
 });
 
 function showHeroEditor() {
-  renderHeroCard();
+  renderEditHeroSection();
 }
 
 function searchHero() {
   renderSearchPreview();
 }
 
-function renderHeroCard() {
-  searchBar.style.animation = 'slideDown2 0.7s ease-out forwards';
-
+function renderEditHeroSection() {
+  // searchBar.style.animation = 'slideDown2 0.7s ease-out forwards';
+  searchBar.style.display = 'none';
   const heroEditorSection = document.createElement('div');
   heroEditorSection.id = 'heroEditorSection';
   heroEditorSection.className = 'hero-editor-section';
@@ -85,6 +85,8 @@ function renderSearchPreview() {
     for (let i = 0; i < 3; i++) {
       const result = document.createElement('div');
       result.className = 'result';
+      result.id = 'result';
+
       searchPreview.appendChild(result);
 
       const resultPictureSection = document.createElement('div');
@@ -102,7 +104,23 @@ function renderSearchPreview() {
       const resultTitle = document.createElement('div');
       resultTitle.className = 'result-title';
       resultTitleSection.appendChild(resultTitle);
+
+      result.addEventListener('click' ,function(){
+        renderHeroCard()
+      })
     }
   }
   searchBar.style.animation = 'slideDown 0.5s ease-out forwards';
+}
+
+function renderHeroCard() {
+  const heroCard = document.createElement('div');
+  heroCard.className = 'hero-card';
+
+  let searchPreview = document.getElementById('searchPreview');
+  let searchBar = document.getElementById('searchBar');
+  searchPreview.style.display = 'none';
+  searchBar.style.display = 'none';
+
+  heroSearchContainer.appendChild(heroCard);
 }
