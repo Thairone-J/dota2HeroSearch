@@ -9,14 +9,19 @@
     <script src="script.js" type="module" defer></script>
   </head>
   <body>
-      <div id="app" class="main-container">
+    <div id="mainContainer" class="main-container">
+      <div id="app" class="app">
         <div class="hero-preview-container" id="heroPreviewContainer">
-          <div class="show-hero-editor-button" id="showHeroEditorButton"><i class="material-icons"">add</i></div>
-          <div class="search-bar" id="searchBar">
-            <input type="text" placeholder="Search hero.." />
-            <i class="material-icons search-icon" id="searchButton">search</i>
+          <div class="show-hero-editor-button" id="showHeroEditorButton">
+            <i class="material-icons">add</i>
           </div>
         </div>
+        <div class="search-bar" id="searchBar">
+          <input type="text" id="searchInput" autocomplete="off" placeholder="Search hero.." />
+          <i class="material-icons search-icon" id="searchButton">search</i>
+        </div>
       </div>
+      <div id="footer" class="footer">Footer</div>
+    </div>
   </body>
 </html>

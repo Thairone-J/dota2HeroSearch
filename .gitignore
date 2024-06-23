@@ -1,2 +1,4 @@
-skils.txt
-images/
+node_modules/
+server.js
+importHeroes.js
+package-lock.json
