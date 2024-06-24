@@ -57,6 +57,10 @@ async function loadHeroes() {
 function showHero() {
   const heroCard = document.getElementById('heroCard');
   heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${currentHero.imageUrl})`;
+  const heroMainAttr = document.querySelector(`.${currentHero.mainAttr}`);
+  heroMainAttr.style.borderWidth = '3px';
+  heroMainAttr.style.borderColor = 'white';
+  heroMainAttr.style.borderStyle = 'solid';
 }
 
 function showHeroEditor() {
@@ -82,6 +86,7 @@ function searchHero(queryHero) {
     resultImage.style.backgroundPosition = 'center';
     resultImage.style.backgroundSize = '110%'; // Leve zoom na imagem
     resultImage.style.backgroundRepeat = 'no-repeat';
+
     currentHero = result;
   }
 }
@@ -157,17 +162,18 @@ function renderHeroCard() {
 
 function renderAttributes() {
   const heroCard = document.getElementById('heroCard');
-  const heroSkills = document.getElementById('heroSkills');
   const heroAttributes = document.createElement('div');
   heroAttributes.className = 'hero-attributes';
   heroAttributes.id = 'heroAttributes';
-  heroCard.insertBefore(heroAttributes, heroSkills);
+  heroCard.appendChild(heroAttributes);
 
-  for (let i = 0; i < 3; i++) {
+  const attributes = ['agi', 'str', 'intel'];
+
+  attributes.forEach((attr) => {
     const heroIndividualAttribute = document.createElement('div');
-    heroIndividualAttribute.className = 'hero-indivudal-attribute';
+    heroIndividualAttribute.className = `hero-indivudal-attribute ${attr}`;
     heroAttributes.appendChild(heroIndividualAttribute);
-  }
+  });
 }
 
 function renderShuffleButton() {

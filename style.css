@@ -52,6 +52,7 @@
   /* to-do: set image bg url (script) */
   background-size: cover;
   background-position: center;
+  background-color: rgb(25, 33, 54);
   border-radius: 15px;
   margin-bottom: 20px;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
@@ -166,26 +167,23 @@
 .hero-indivudal-attribute {
   text-align: center;
   font-size: 1rem;
-  background-color: rgb(50, 60, 76);
   height: 50px;
   width: 50px;
   border-radius: 100%;
 }
 
-.hero-picture {
-  width: 200px;
-  height: 200px;
-  background-color: yellow;
-  border-radius: 100%;
+.hero-attributes .agi {
+  background-image: url('https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/icons/hero_agility.png');
+  background-size: cover;
 }
 
-.hero-picture-wraper {
-  width: 100%;
-  transform: translateY(-150px);
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: absolute;
+.hero-attributes .str {
+  background-image: url('https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/icons/hero_strength.png');
+  background-size: cover;
+}
+.hero-attributes .intel {
+  background-image: url('https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/icons/hero_intelligence.png');
+  background-size: cover;
 }
 
 .search-preview {
@@ -197,7 +195,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   padding: 13px;
 }
 
@@ -206,35 +203,42 @@
   cursor: pointer;
   background-color: rgb(25, 7, 37);
   width: 100%;
-  height: 30%;
   border-radius: 10px;
   transition: transform 300ms ease;
   margin-bottom: 10px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 .result:hover {
   transform: scale(98%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .result-picture-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  width: 30%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .result-picture {
   width: 70px;
   height: 70px;
   border-radius: 100%;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
 }
 
 .result-title-section {
   display: flex;
   width: 100%;
-  height: 100%;
+  justify-content: center;
   align-items: center;
-  justify-content: start;
 }
 
 .result-title {
@@ -242,7 +246,6 @@
   font-size: 2rem;
   font-family: 'Cinzel', serif;
   font-weight: 500;
-  margin-left: 5px;
 }
 
 .shuffle-container {
@@ -257,7 +260,7 @@
   font-size: 36px;
   transition: transform 300ms ease;
   cursor: pointer;
-  color: rgb(50, 60, 76);
+  color: rgb(255, 255, 255);
 }
 .hero-shuffle-icon:hover {
   transform: scale(90%);

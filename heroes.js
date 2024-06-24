@@ -130,3 +130,6 @@ heroes.forEach((hero) => {
 });
 
 export default heroes;
+
+
+// https://cdn.akamai.steamstatic.com/apps/dota2/videos/dota_react/heroes/renders/pudge.webm
