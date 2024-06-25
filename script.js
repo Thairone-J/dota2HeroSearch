@@ -57,13 +57,34 @@ async function loadHeroes() {
 function showHero() {
   const heroCard = document.getElementById('heroCard');
   heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${currentHero.imageUrl})`;
-  const heroMainAttr = document.querySelector(`.${currentHero.mainAttr}`);
-  heroMainAttr.style.borderWidth = '3px';
-  heroMainAttr.style.borderColor = 'white';
-  heroMainAttr.style.borderStyle = 'solid';
+
+  const mainAttr = currentHero.mainAttr;
+  let attrIcon;
+
+  switch (mainAttr) {
+    case 'str':
+      attrIcon = document.getElementById('strengthIcon');
+      break;
+    case 'agi':
+      attrIcon = document.getElementById('agilityIcon');
+      break;
+    case 'intel':
+      attrIcon = document.getElementById('intelligenceIcon');
+      break;
+
+    default:
+      return;
+  }
+
+  attrIcon.style.borderWidth = '3px';
+  attrIcon.style.borderColor = 'white';
+  attrIcon.style.borderStyle = 'solid';
+  attrIcon.style.borderRadius = '100%';
 }
 
 function showHeroEditor() {
+  const emptyHero = { name: 'New Hero', main_attr: undefined, agi: 0, str: 0, intel: 0 };
+  currentHero = emptyHero;
   renderHeroCard();
 }
 
@@ -114,25 +135,43 @@ function renderHeroCard() {
   heroPreviewContainer.appendChild(heroCard);
   // renderSkills();
   renderShuffleButton();
-
   renderAttributesContainer();
   renderAttributes();
-  showAttributesValues();
+  //  renderInfoContainer();
+}
+function renderAttributesContainer() {
+  const attributesContainer = document.createElement('div');
+  attributesContainer.className = 'attributes-container';
+  attributesContainer.id = 'attributesContainer';
+  const heroCard = document.getElementById('heroCard');
+  heroCard.appendChild(attributesContainer);
 }
 
 function renderAttributes() {
   const attributesContainer = document.getElementById('attributesContainer');
-  const heroAttributes = document.createElement('div');
-  heroAttributes.className = 'hero-attributes';
-  heroAttributes.id = 'heroAttributes';
-  attributesContainer.appendChild(heroAttributes);
 
-  const attributes = ['agi', 'str', 'intel'];
+  const AttributesData = {
+    agility: currentHero.agi,
+    strength: currentHero.str,
+    intelligence: currentHero.intel,
+  };
 
-  attributes.forEach((attr) => {
-    const heroIndividualAttribute = document.createElement('div');
-    heroIndividualAttribute.className = `hero-indivudal-attribute ${attr}`;
-    heroAttributes.appendChild(heroIndividualAttribute);
+  Object.keys(AttributesData).forEach((attr) => {
+    const attrRow = document.createElement('div');
+    attrRow.className = 'attr-row';
+    attrRow.id = 'attrRow';
+    attributesContainer.appendChild(attrRow);
+
+    const icon = document.createElement('img');
+    icon.className = 'icon';
+    icon.id = `${attr}Icon`;
+    icon.src = `https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/icons/hero_${attr}.png`;
+    attrRow.appendChild(icon);
+
+    const value = document.createElement('div');
+    value.className = 'value';
+    value.textContent = AttributesData[attr];
+    attrRow.appendChild(value);
   });
 }
 
@@ -156,26 +195,6 @@ function renderShuffleButton() {
 
 function shuffleHero() {
   console.error('shuffle is not defiened');
-}
-
-function showAttributesValues() {
-  const AttributesContainer = document.getElementById('attributesContainer');
-  const attrValuesContainer = document.createElement('div');
-  attrValuesContainer.className = 'attr-values-container';
-  AttributesContainer.appendChild(attrValuesContainer)
-  const heroAttributesValues = {
-    agi: currentHero.agi,
-    str: currentHero.str,
-    intel: currentHero.intel,
-  };
-
-
-  Object.keys(heroAttributesValues).forEach((attr) => {
-    const attrValue = document.createElement('div');
-    attrValue.className = 'attr-value'
-    attrValue.textContent = heroAttributesValues[attr];
-    attrValuesContainer.appendChild(attrValue);
-  });
 }
 
 function renderResult() {
@@ -220,12 +239,4 @@ function showResultData(result) {
   resultImage.style.backgroundPosition = 'center';
   resultImage.style.backgroundSize = '110%';
   resultImage.style.backgroundRepeat = 'no-repeat';
-}
-
-function renderAttributesContainer() {
-  const attributesContainer = document.createElement('div');
-  attributesContainer.className = 'attributes-container';
-  attributesContainer.id = 'attributesContainer';
-  const heroCard = document.getElementById('heroCard');
-  heroCard.appendChild(attributesContainer);
 }
