@@ -135,10 +135,27 @@ function renderHeroCard() {
   heroPreviewContainer.appendChild(heroCard);
   // renderSkills();
   renderShuffleButton();
+  renderInfoContainer();
+  renderInfos();
   renderAttributesContainer();
   renderAttributes();
-  //  renderInfoContainer();
 }
+
+function renderInfos() {
+  const heroName = document.createElement('div');
+  heroName.className = 'hero-name';
+  heroName.textContent = currentHero.name;
+  heroName.contentEditable = 'true';
+  const infoContainer = document.getElementById('infoContainer');
+  infoContainer.appendChild(heroName);
+
+  infoContainer.addEventListener('mouseleave', () => {
+    if (document.activeElement === heroName) {
+      heroName.blur();
+    }
+  });
+}
+
 function renderAttributesContainer() {
   const attributesContainer = document.createElement('div');
   attributesContainer.className = 'attributes-container';
@@ -173,6 +190,14 @@ function renderAttributes() {
     value.textContent = AttributesData[attr];
     attrRow.appendChild(value);
   });
+}
+
+function renderInfoContainer() {
+  const infoContainer = document.createElement('div');
+  infoContainer.className = 'info-container';
+  infoContainer.id = 'infoContainer';
+  const heroCard = document.getElementById('heroCard');
+  heroCard.append(infoContainer);
 }
 
 function renderShuffleButton() {
@@ -226,8 +251,6 @@ function renderResult() {
   result.addEventListener('click', function () {
     renderHeroCard();
     showHero();
-    const shuffleContainer = document.getElementById('shuffleContainer');
-    shuffleContainer.style.display = 'none';
   });
 }
 

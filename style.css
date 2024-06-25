@@ -140,6 +140,24 @@
   height: 25%;
 }
 
+.info-container {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-name {
+  text-align: center;
+  justify-content: center;
+
+  width: 95%;
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  margin-top: 30px;
+}
+
 .attributes-container {
   display: flex;
   justify-content: center;
@@ -242,7 +260,7 @@
 }
 
 .shuffle-container {
-  transform: translateY(-380px);
+  transform: translateY(-280px);
   width: 100%;
   height: 10%;
   display: flex;
