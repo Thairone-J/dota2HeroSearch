@@ -76,18 +76,9 @@ function searchHero(queryHero) {
     hero.name.toLowerCase().startsWith(queryHero.toLowerCase())
   );
   if (result) {
-    renderSearchPreview();
-    const resultTitle = document.getElementById('resultTitle');
-    resultTitle.textContent = result.name;
-    const resultImage = document.getElementById('resultPicture');
-    resultImage.style.backgroundImage = `url(${result.imageUrl})`;
-    resultImage.style.backgroundImage = `url(${result.imageUrl})`;
-    resultImage.style.backgroundSize = 'contain';
-    resultImage.style.backgroundPosition = 'center';
-    resultImage.style.backgroundSize = '110%'; // Leve zoom na imagem
-    resultImage.style.backgroundRepeat = 'no-repeat';
-
     currentHero = result;
+    renderSearchPreview();
+    showResultData(currentHero);
   }
 }
 
@@ -101,37 +92,7 @@ function renderSearchPreview() {
     searchPreview.id = 'searchPreview';
     searchPreview.className = 'search-preview';
     heroPreviewContainer.appendChild(searchPreview);
-
-    const result = document.createElement('div');
-    result.className = 'result';
-    result.id = 'result';
-
-    searchPreview.appendChild(result);
-
-    const resultPictureSection = document.createElement('div');
-    resultPictureSection.className = 'result-picture-section';
-    result.appendChild(resultPictureSection);
-
-    const resultPicture = document.createElement('div');
-    resultPicture.className = 'result-picture';
-    resultPicture.id = 'resultPicture';
-    resultPictureSection.appendChild(resultPicture);
-
-    const resultTitleSection = document.createElement('div');
-    resultTitleSection.className = 'result-title-section';
-    result.appendChild(resultTitleSection);
-
-    const resultTitle = document.createElement('div');
-    resultTitle.id = 'resultTitle';
-    resultTitle.className = 'result-title';
-    resultTitleSection.appendChild(resultTitle);
-
-    result.addEventListener('click', function () {
-      renderHeroCard();
-      showHero();
-      const shuffleContainer = document.getElementById('shuffleContainer');
-      shuffleContainer.style.display = 'none';
-    });
+    renderResult();
   }
 }
 
@@ -141,9 +102,6 @@ function renderHeroCard() {
   heroCard.id = 'heroCard';
 
   const searchPreview = document.getElementById('searchPreview');
-  const searchBar = document.getElementById('searchBar');
-  const showHeroEditorButton = document.getElementById('showHeroEditorButton');
-  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
 
   const elements = [searchPreview, searchBar, showHeroEditorButton];
 
@@ -155,17 +113,19 @@ function renderHeroCard() {
 
   heroPreviewContainer.appendChild(heroCard);
   // renderSkills();
-  renderAttributes();
   renderShuffleButton();
-  // renderPicture();
+
+  renderAttributesContainer();
+  renderAttributes();
+  showAttributesValues();
 }
 
 function renderAttributes() {
-  const heroCard = document.getElementById('heroCard');
+  const attributesContainer = document.getElementById('attributesContainer');
   const heroAttributes = document.createElement('div');
   heroAttributes.className = 'hero-attributes';
   heroAttributes.id = 'heroAttributes';
-  heroCard.appendChild(heroAttributes);
+  attributesContainer.appendChild(heroAttributes);
 
   const attributes = ['agi', 'str', 'intel'];
 
@@ -189,4 +149,83 @@ function renderShuffleButton() {
   heroShuffleIcon.className = 'hero-shuffle-icon material-icons shuffle';
   heroShuffleIcon.textContent = 'shuffle';
   shuffleContainer.append(heroShuffleIcon);
+  heroShuffleIcon.addEventListener('click', function () {
+    shuffleHero();
+  });
+}
+
+function shuffleHero() {
+  console.error('shuffle is not defiened');
+}
+
+function showAttributesValues() {
+  const AttributesContainer = document.getElementById('attributesContainer');
+  const attrValuesContainer = document.createElement('div');
+  attrValuesContainer.className = 'attr-values-container';
+  AttributesContainer.appendChild(attrValuesContainer)
+  const heroAttributesValues = {
+    agi: currentHero.agi,
+    str: currentHero.str,
+    intel: currentHero.intel,
+  };
+
+
+  Object.keys(heroAttributesValues).forEach((attr) => {
+    const attrValue = document.createElement('div');
+    attrValue.className = 'attr-value'
+    attrValue.textContent = heroAttributesValues[attr];
+    attrValuesContainer.appendChild(attrValue);
+  });
+}
+
+function renderResult() {
+  const searchPreview = document.getElementById('searchPreview');
+  const result = document.createElement('div');
+  result.className = 'result';
+  result.id = 'result';
+
+  searchPreview.appendChild(result);
+
+  const resultPictureSection = document.createElement('div');
+  resultPictureSection.className = 'result-picture-section';
+  result.appendChild(resultPictureSection);
+
+  const resultPicture = document.createElement('div');
+  resultPicture.className = 'result-picture';
+  resultPicture.id = 'resultPicture';
+  resultPictureSection.appendChild(resultPicture);
+
+  const resultTitleSection = document.createElement('div');
+  resultTitleSection.className = 'result-title-section';
+  result.appendChild(resultTitleSection);
+
+  const resultTitle = document.createElement('div');
+  resultTitle.id = 'resultTitle';
+  resultTitle.className = 'result-title';
+  resultTitleSection.appendChild(resultTitle);
+
+  result.addEventListener('click', function () {
+    renderHeroCard();
+    showHero();
+    const shuffleContainer = document.getElementById('shuffleContainer');
+    shuffleContainer.style.display = 'none';
+  });
+}
+
+function showResultData(result) {
+  const resultTitle = document.getElementById('resultTitle');
+  resultTitle.textContent = result.name;
+  const resultImage = document.getElementById('resultPicture');
+  resultImage.style.backgroundImage = `url(${result.imageUrl})`;
+  resultImage.style.backgroundPosition = 'center';
+  resultImage.style.backgroundSize = '110%';
+  resultImage.style.backgroundRepeat = 'no-repeat';
+}
+
+function renderAttributesContainer() {
+  const attributesContainer = document.createElement('div');
+  attributesContainer.className = 'attributes-container';
+  attributesContainer.id = 'attributesContainer';
+  const heroCard = document.getElementById('heroCard');
+  heroCard.appendChild(attributesContainer);
 }
