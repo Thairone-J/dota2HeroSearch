@@ -187,6 +187,8 @@
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1.5rem;
+  cursor: pointer;
+  
 }
 
 .skill-img {

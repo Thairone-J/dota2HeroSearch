@@ -56,8 +56,18 @@ async function loadHeroes() {
 
 function showHero() {
   const heroCard = document.getElementById('heroCard');
-  heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${currentHero.imageUrl})`;
+  if (currentHero.name !== 'New Hero') {
+    heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${currentHero.imageUrl})`;
+  }
+  renderInfoContainer();
+  renderInfos();
+  renderAttributesContainer();
+  renderAttributes();
+  renderMainAttr();
+}
 
+function renderMainAttr() {
+  clearAttrIcons();
   const mainAttr = currentHero.mainAttr;
   let attrIcon;
 
@@ -83,9 +93,14 @@ function showHero() {
 }
 
 function showHeroEditor() {
-  const emptyHero = { name: 'New Hero', main_attr: undefined, agi: 0, str: 0, intel: 0 };
+  if (!heroesDataAvaible) {
+    loadHeroes();
+  }
+
+  const emptyHero = { name: 'New Hero', mainAttr: undefined, agi: 0, str: 0, intel: 0 };
   currentHero = emptyHero;
   renderHeroCard();
+  showHero();
 }
 
 function searchHero(queryHero) {
@@ -117,6 +132,48 @@ function renderSearchPreview() {
   }
 }
 
+function renderResult() {
+  const searchPreview = document.getElementById('searchPreview');
+  const result = document.createElement('div');
+  result.className = 'result';
+  result.id = 'result';
+
+  searchPreview.appendChild(result);
+
+  const resultPictureSection = document.createElement('div');
+  resultPictureSection.className = 'result-picture-section';
+  result.appendChild(resultPictureSection);
+
+  const resultPicture = document.createElement('div');
+  resultPicture.className = 'result-picture';
+  resultPicture.id = 'resultPicture';
+  resultPictureSection.appendChild(resultPicture);
+
+  const resultTitleSection = document.createElement('div');
+  resultTitleSection.className = 'result-title-section';
+  result.appendChild(resultTitleSection);
+
+  const resultTitle = document.createElement('div');
+  resultTitle.id = 'resultTitle';
+  resultTitle.className = 'result-title';
+  resultTitleSection.appendChild(resultTitle);
+
+  result.addEventListener('click', function () {
+    renderHeroCard();
+    showHero();
+  });
+}
+
+function showResultData(result) {
+  const resultTitle = document.getElementById('resultTitle');
+  resultTitle.textContent = result.name;
+  const resultImage = document.getElementById('resultPicture');
+  resultImage.style.backgroundImage = `url(${result.imageUrl})`;
+  resultImage.style.backgroundPosition = 'center';
+  resultImage.style.backgroundSize = '110%';
+  resultImage.style.backgroundRepeat = 'no-repeat';
+}
+
 function renderHeroCard() {
   const heroCard = document.createElement('div');
   heroCard.className = 'hero-card';
@@ -135,10 +192,14 @@ function renderHeroCard() {
   heroPreviewContainer.appendChild(heroCard);
   // renderSkills();
   renderShuffleButton();
-  renderInfoContainer();
-  renderInfos();
-  renderAttributesContainer();
-  renderAttributes();
+}
+
+function renderInfoContainer() {
+  const infoContainer = document.createElement('div');
+  infoContainer.className = 'info-container';
+  infoContainer.id = 'infoContainer';
+  const heroCard = document.getElementById('heroCard');
+  heroCard.append(infoContainer);
 }
 
 function renderInfos() {
@@ -187,17 +248,18 @@ function renderAttributes() {
 
     const value = document.createElement('div');
     value.className = 'value';
+    value.id = `${attr}Value`;
+    value.contentEditable = 'true';
     value.textContent = AttributesData[attr];
     attrRow.appendChild(value);
-  });
-}
+    heroCard.addEventListener('mouseleave', () => {
+      if (document.activeElement === value) {
+        value.blur();
+      }
+    });
 
-function renderInfoContainer() {
-  const infoContainer = document.createElement('div');
-  infoContainer.className = 'info-container';
-  infoContainer.id = 'infoContainer';
-  const heroCard = document.getElementById('heroCard');
-  heroCard.append(infoContainer);
+    allowOnlyNumbers(value);
+  });
 }
 
 function renderShuffleButton() {
@@ -214,52 +276,59 @@ function renderShuffleButton() {
   heroShuffleIcon.textContent = 'shuffle';
   shuffleContainer.append(heroShuffleIcon);
   heroShuffleIcon.addEventListener('click', function () {
-    shuffleHero();
+    shuffleImg(currentHero);
   });
 }
 
-function shuffleHero() {
-  console.error('shuffle is not defiened');
+function shuffleImg(hero) {
+  const randomImg = defaultHeroList[Math.floor(Math.random() * defaultHeroList.length)].imageUrl;
+  hero.imageUrl = randomImg;
+  updateImgBg();
 }
 
-function renderResult() {
-  const searchPreview = document.getElementById('searchPreview');
-  const result = document.createElement('div');
-  result.className = 'result';
-  result.id = 'result';
-
-  searchPreview.appendChild(result);
-
-  const resultPictureSection = document.createElement('div');
-  resultPictureSection.className = 'result-picture-section';
-  result.appendChild(resultPictureSection);
-
-  const resultPicture = document.createElement('div');
-  resultPicture.className = 'result-picture';
-  resultPicture.id = 'resultPicture';
-  resultPictureSection.appendChild(resultPicture);
-
-  const resultTitleSection = document.createElement('div');
-  resultTitleSection.className = 'result-title-section';
-  result.appendChild(resultTitleSection);
-
-  const resultTitle = document.createElement('div');
-  resultTitle.id = 'resultTitle';
-  resultTitle.className = 'result-title';
-  resultTitleSection.appendChild(resultTitle);
-
-  result.addEventListener('click', function () {
-    renderHeroCard();
-    showHero();
+function updateImgBg() {
+  heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${currentHero.imageUrl})`;
+}
+function clearAttrIcons() {
+  const icons = document.querySelectorAll('#strengthIcon, #agilityIcon, #intelligenceIcon');
+  icons.forEach((icon) => {
+    icon.style.borderWidth = '';
+    icon.style.borderColor = '';
+    icon.style.borderStyle = '';
+    icon.style.borderRadius = '';
   });
 }
 
-function showResultData(result) {
-  const resultTitle = document.getElementById('resultTitle');
-  resultTitle.textContent = result.name;
-  const resultImage = document.getElementById('resultPicture');
-  resultImage.style.backgroundImage = `url(${result.imageUrl})`;
-  resultImage.style.backgroundPosition = 'center';
-  resultImage.style.backgroundSize = '110%';
-  resultImage.style.backgroundRepeat = 'no-repeat';
+function allowOnlyNumbers(element) {
+  element.addEventListener('keydown', function (event) {
+    const key = event.key;
+    const content = element.textContent;
+
+    if (
+      ['Backspace', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Delete', 'Tab'].includes(
+        key
+      )
+    ) {
+      return;
+    }
+
+    if (!/^\d$/.test(key) || content.length >= 2) {
+      event.preventDefault();
+    }
+  });
+
+  element.addEventListener('input', function () {
+    let value = element.textContent.replace(/[^\d]/g, '');
+    if (value.length > 2) {
+      value = value.slice(0, 2);
+    }
+    if (value === '') {
+      value = '0';
+    }
+    element.textContent = value;
+  });
+
+  if (!/^\d{1,2}$/.test(element.textContent)) {
+    element.textContent = '0';
+  }
 }
