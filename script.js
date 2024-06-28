@@ -11,21 +11,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function renderHomePage() {
   removeHomeElementsIfExist();
-  renderPreviewContainer();
   renderHeroEditorButton();
-  renderSearchBar();
+  renderSearchContainer();
 
   function removeHomeElementsIfExist() {
-    const previewContainer = document.getElementById('heroPreviewContainer');
+    const heroPreviewContainer = document.getElementById('heroPreviewContainer');
     const editorButton = document.getElementById('heroEditorButton');
-    const searchBar = document.getElementById('searchBar');
+    const searchContainer = document.getElementById('searchContainer');
 
-    if (previewContainer && editorButton) {
-      previewContainer.removeChild(editorButton);
-      app.removeChild(previewContainer);
+    if (editorButton) {
+      app.removeChild(editorButton);
     }
-    if (searchBar) {
-      app.removeChild(searchBar);
+    if (searchContainer) {
+      app.removeChild(searchContainer);
+    }
+    if (searchContainer) {
+      app.removeChild(heroPreviewContainer);
     }
   }
 }
@@ -44,22 +45,36 @@ function renderHeroEditorButton() {
   icon.className = 'material-icons';
   icon.textContent = 'add';
   heroEditorButton.appendChild(icon);
-  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
 
-  heroPreviewContainer.appendChild(heroEditorButton);
+  app.appendChild(heroEditorButton);
   heroEditorButton.addEventListener('click', function () {
     showHeroEditor();
   });
 }
 
+function renderSearchContainer() {
+  const searchContainer = document.createElement('div');
+  searchContainer.className = 'search-container';
+  searchContainer.id = 'searchContainer';
+  app.appendChild(searchContainer);
 
+  const searchBarContainer = document.createElement('div');
+  searchBarContainer.className = 'search-bar-container';
+  searchBarContainer.id = 'searchBarContainer';
 
+  searchContainer.appendChild(searchBarContainer);
 
+  const resultContainer = document.createElement('div');
+  resultContainer.className = 'result-container';
+  resultContainer.id = 'resultContainer';
 
+  searchContainer.appendChild(resultContainer);
 
-
+  renderSearchBar();
+}
 
 function renderSearchBar() {
+  const searchBarContainer = document.getElementById('searchBarContainer');
   const searchBar = document.createElement('div');
   searchBar.className = 'search-bar';
   searchBar.id = 'searchBar';
@@ -74,22 +89,15 @@ function renderSearchBar() {
   icon.textContent = 'search';
 
   input.addEventListener('input', function () {
-    if (searchInput.value < 1) {
-      const searchPreview = document.getElementById('searchPreview');
-      if (searchPreview) {
-        searchPreview.style.animation = 'fadeOut 300ms';
-      }
-      setTimeout(() => {
-        const heroPreviewContainer = document.getElementById('heroPreviewContainer');
-        heroPreviewContainer.removeChild(searchPreview);
-      }, 350);
+    if (input.value.trim() === '') {
+      clearResult();
+    } else {
+      searchHero(input.value);
     }
-    searchHero(searchInput.value);
   });
-
   searchBar.appendChild(input);
   searchBar.appendChild(icon);
-  app.appendChild(searchBar);
+  searchBarContainer.appendChild(searchBar);
 }
 
 async function loadHeroes() {
@@ -176,77 +184,83 @@ function searchHero(queryHero) {
   );
   if (result) {
     currentHero = result;
-    renderSearchPreview();
-    showResultData(currentHero);
+    renderResult(currentHero);
+  } else {
+    clearResult();
   }
 }
 
-function renderSearchPreview() {
-  let searchPreview = document.getElementById('searchPreview');
+function renderResult(hero) {
+  const resultContainer = document.getElementById('resultContainer');
+  let result = document.getElementById('result');
 
-  if (!searchPreview) {
-    const heroEditorButton = document.getElementById('heroEditorButton');
-    heroEditorButton.style.display = 'none';
+  if (!result) {
+    result = document.createElement('div');
+    result.className = 'result';
+    result.id = 'result';
 
-    searchPreview = document.createElement('div');
-    searchPreview.id = 'searchPreview';
-    searchPreview.className = 'search-preview';
-    const heroPreviewContainer = document.getElementById('heroPreviewContainer');
-    heroPreviewContainer.appendChild(searchPreview);
-    renderResult();
+    const resultPictureSection = document.createElement('div');
+    resultPictureSection.className = 'result-picture-section';
+    result.appendChild(resultPictureSection);
+
+    const resultPicture = document.createElement('div');
+    resultPicture.className = 'result-picture';
+    resultPicture.id = 'resultPicture';
+    resultPictureSection.appendChild(resultPicture);
+
+    const resultTitleSection = document.createElement('div');
+    resultTitleSection.className = 'result-title-section';
+    result.appendChild(resultTitleSection);
+
+    const resultTitle = document.createElement('div');
+    resultTitle.id = 'resultTitle';
+    resultTitle.className = 'result-title';
+    resultTitleSection.appendChild(resultTitle);
+
+    result.addEventListener('click', function () {
+      renderHeroCard();
+      showHero();
+    });
+
+    resultContainer.appendChild(result);
   }
+
+  updateResultData(hero);
 }
 
-function renderResult() {
-  const searchPreview = document.getElementById('searchPreview');
-  const result = document.createElement('div');
-  result.className = 'result';
-  result.id = 'result';
-
-  searchPreview.appendChild(result);
-
-  const resultPictureSection = document.createElement('div');
-  resultPictureSection.className = 'result-picture-section';
-  result.appendChild(resultPictureSection);
-
-  const resultPicture = document.createElement('div');
-  resultPicture.className = 'result-picture';
-  resultPicture.id = 'resultPicture';
-  resultPictureSection.appendChild(resultPicture);
-
-  const resultTitleSection = document.createElement('div');
-  resultTitleSection.className = 'result-title-section';
-  result.appendChild(resultTitleSection);
-
-  const resultTitle = document.createElement('div');
-  resultTitle.id = 'resultTitle';
-  resultTitle.className = 'result-title';
-  resultTitleSection.appendChild(resultTitle);
-
-  result.addEventListener('click', function () {
-    renderHeroCard();
-    showHero();
-  });
-}
-
-function showResultData(result) {
+function updateResultData(hero) {
   const resultTitle = document.getElementById('resultTitle');
-  resultTitle.textContent = result.name;
+  resultTitle.textContent = hero.name;
   const resultImage = document.getElementById('resultPicture');
-  resultImage.style.backgroundImage = `url(${result.imageUrl})`;
+  resultImage.style.backgroundImage = `url(${hero.imageUrl})`;
   resultImage.style.backgroundPosition = 'center';
   resultImage.style.backgroundSize = '110%';
   resultImage.style.backgroundRepeat = 'no-repeat';
 }
 
+function clearResult() {
+  const resultContainer = document.getElementById('resultContainer');
+  const result = document.getElementById('result');
+  if (result) {
+    result.style.animation = 'fadeOut 300ms ease-out forwards';
+    setTimeout(() => {
+      if (result && resultContainer.contains(result)) {
+        resultContainer.removeChild(result);
+      }
+    }, 300);
+  }
+}
+
 function renderHeroCard() {
+  renderPreviewContainer();
   const heroCard = document.createElement('div');
   heroCard.className = 'hero-card';
   heroCard.id = 'heroCard';
 
-  const searchPreview = document.getElementById('searchPreview');
+  const searchContainer = document.getElementById('searchContainer');
+  const editorButton = document.getElementById('heroEditorButton');
 
-  const elements = [searchPreview, searchBar, heroEditorButton];
+  const elements = [searchContainer, editorButton];
 
   elements.forEach((element) => {
     if (element) {
