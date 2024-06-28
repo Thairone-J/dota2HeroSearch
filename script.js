@@ -1,33 +1,96 @@
-const showHeroEditorButton = document.getElementById('showHeroEditorButton');
-const heroPreviewContainer = document.getElementById('heroPreviewContainer');
-const searchBar = document.getElementById('searchBar');
-const searchInput = document.getElementById('searchInput');
-const searchButton = document.getElementById('searchButton');
 let defaultHeroList = [];
 let currentHero;
 let heroesDataAvaible = false;
 console.info('Heroes data is avaible: ' + heroesDataAvaible);
 
-searchInput.addEventListener('input', function () {
-  if (searchInput.value < 1) {
-    const searchPreview = document.getElementById('searchPreview');
-    if (searchPreview) {
-      searchPreview.style.animation = 'fadeOut 300ms';
+const app = document.getElementById('app');
+
+document.addEventListener('DOMContentLoaded', function () {
+  renderHomePage();
+});
+
+function renderHomePage() {
+  removeHomeElementsIfExist();
+  renderPreviewContainer();
+  renderHeroEditorButton();
+  renderSearchBar();
+
+  function removeHomeElementsIfExist() {
+    const previewContainer = document.getElementById('heroPreviewContainer');
+    const editorButton = document.getElementById('heroEditorButton');
+    const searchBar = document.getElementById('searchBar');
+
+    if (previewContainer && editorButton) {
+      previewContainer.removeChild(editorButton);
+      app.removeChild(previewContainer);
     }
-    setTimeout(() => {
-      heroPreviewContainer.removeChild(searchPreview);
-    }, 350);
+    if (searchBar) {
+      app.removeChild(searchBar);
+    }
   }
-  searchHero(searchInput.value);
-});
+}
+function renderPreviewContainer() {
+  const heroPreviewContainer = document.createElement('div');
+  heroPreviewContainer.className = 'hero-preview-container';
+  heroPreviewContainer.id = 'heroPreviewContainer';
+  app.appendChild(heroPreviewContainer);
+}
 
-searchButton.addEventListener('click', function () {
-  searchHero(searchInput.value);
-});
+function renderHeroEditorButton() {
+  const heroEditorButton = document.createElement('div');
+  heroEditorButton.className = 'hero-editor-button';
+  heroEditorButton.id = 'heroEditorButton';
+  const icon = document.createElement('i');
+  icon.className = 'material-icons';
+  icon.textContent = 'add';
+  heroEditorButton.appendChild(icon);
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
 
-showHeroEditorButton.addEventListener('click', function () {
-  showHeroEditor();
-});
+  heroPreviewContainer.appendChild(heroEditorButton);
+  heroEditorButton.addEventListener('click', function () {
+    showHeroEditor();
+  });
+}
+
+
+
+
+
+
+
+
+function renderSearchBar() {
+  const searchBar = document.createElement('div');
+  searchBar.className = 'search-bar';
+  searchBar.id = 'searchBar';
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'searchInput';
+  input.autocomplete = 'off';
+  input.placeholder = 'Search hero..';
+  const icon = document.createElement('i');
+  icon.className = 'material-icons';
+  icon.id = 'searchButton';
+  icon.textContent = 'search';
+
+  input.addEventListener('input', function () {
+    if (searchInput.value < 1) {
+      const searchPreview = document.getElementById('searchPreview');
+      if (searchPreview) {
+        searchPreview.style.animation = 'fadeOut 300ms';
+      }
+      setTimeout(() => {
+        const heroPreviewContainer = document.getElementById('heroPreviewContainer');
+        heroPreviewContainer.removeChild(searchPreview);
+      }, 350);
+    }
+    searchHero(searchInput.value);
+  });
+
+  searchBar.appendChild(input);
+  searchBar.appendChild(icon);
+  app.appendChild(searchBar);
+}
 
 async function loadHeroes() {
   try {
@@ -122,11 +185,13 @@ function renderSearchPreview() {
   let searchPreview = document.getElementById('searchPreview');
 
   if (!searchPreview) {
-    showHeroEditorButton.style.display = 'none';
+    const heroEditorButton = document.getElementById('heroEditorButton');
+    heroEditorButton.style.display = 'none';
 
     searchPreview = document.createElement('div');
     searchPreview.id = 'searchPreview';
     searchPreview.className = 'search-preview';
+    const heroPreviewContainer = document.getElementById('heroPreviewContainer');
     heroPreviewContainer.appendChild(searchPreview);
     renderResult();
   }
@@ -181,16 +246,17 @@ function renderHeroCard() {
 
   const searchPreview = document.getElementById('searchPreview');
 
-  const elements = [searchPreview, searchBar, showHeroEditorButton];
+  const elements = [searchPreview, searchBar, heroEditorButton];
 
   elements.forEach((element) => {
     if (element) {
       element.style.display = 'none';
     }
   });
-
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
   heroPreviewContainer.appendChild(heroCard);
   // renderSkills();
+  renderReturnButton();
   renderShuffleButton();
 }
 
@@ -277,6 +343,25 @@ function renderShuffleButton() {
   shuffleContainer.append(heroShuffleIcon);
   heroShuffleIcon.addEventListener('click', function () {
     shuffleImg(currentHero);
+  });
+}
+
+function renderReturnButton() {
+  const returnContainer = document.createElement('div');
+  returnContainer.className = 'return-container';
+  returnContainer.id = 'returnContainer';
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
+  const app = document.getElementById('app');
+  app.insertBefore(returnContainer, heroPreviewContainer);
+  const returnIcon = document.createElement('i');
+  returnIcon.className = 'return-button material-icons';
+  returnIcon.textContent = 'home';
+  returnContainer.appendChild(returnIcon);
+  returnContainer.addEventListener('click', function () {
+    const heroCard = document.getElementById('heroCard');
+    heroPreviewContainer.removeChild(heroCard);
+    app.removeChild(returnContainer);
+    renderHomePage();
   });
 }
 
