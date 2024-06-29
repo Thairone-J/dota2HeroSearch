@@ -6,21 +6,19 @@ console.info('Heroes data is avaible: ' + heroesDataAvaible);
 const app = document.getElementById('app');
 
 document.addEventListener('DOMContentLoaded', function () {
+  renderControlsContainer();
   renderHomePage();
 });
 
 function renderHomePage() {
   removeHomeElementsIfExist();
-  renderHeroEditorButton();
   renderSearchContainer();
 
   function removeHomeElementsIfExist() {
-    const controlsContainer = document.getElementById('controlsContainer');
     const heroPreviewContainer = document.getElementById('heroPreviewContainer');
-    const editorButton = document.getElementById('heroEditorButton');
     const searchContainer = document.getElementById('searchContainer');
 
-    const elements = [controlsContainer, heroPreviewContainer, editorButton, searchContainer];
+    const elements = [heroPreviewContainer, searchContainer];
 
     elements.forEach((element) => {
       if (element) {
@@ -37,6 +35,7 @@ function renderPreviewContainer() {
 }
 
 function renderHeroEditorButton() {
+  const controlsContainer = document.getElementById('controlsContainer');
   const heroEditorButton = document.createElement('div');
   heroEditorButton.className = 'hero-editor-button';
   heroEditorButton.id = 'heroEditorButton';
@@ -45,7 +44,7 @@ function renderHeroEditorButton() {
   icon.textContent = 'add';
   heroEditorButton.appendChild(icon);
 
-  app.appendChild(heroEditorButton);
+  controlsContainer.appendChild(heroEditorButton);
   heroEditorButton.addEventListener('click', function () {
     showHeroEditor();
   });
@@ -169,8 +168,11 @@ function showHeroEditor() {
 
   const emptyHero = { name: 'New Hero', mainAttr: undefined, agi: 0, str: 0, intel: 0 };
   currentHero = emptyHero;
-  renderHeroCard();
-  showHero();
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
+  if (!heroPreviewContainer) {
+    renderHeroCard();
+    showHero();
+  }
 }
 
 function searchHero(queryHero) {
@@ -257,9 +259,8 @@ function renderHeroCard() {
   heroCard.id = 'heroCard';
 
   const searchContainer = document.getElementById('searchContainer');
-  const editorButton = document.getElementById('heroEditorButton');
 
-  const elements = [searchContainer, editorButton];
+  const elements = [searchContainer];
 
   elements.forEach((element) => {
     if (element) {
@@ -270,7 +271,6 @@ function renderHeroCard() {
   heroPreviewContainer.appendChild(heroCard);
   // renderSkills();
   //renderReturnButton();
-  renderControlsContainer();
   renderShuffleButton();
 }
 
@@ -361,12 +361,13 @@ function renderShuffleButton() {
 }
 
 function renderControlsContainer() {
+  const mainContainer = document.getElementById('mainContainer');
   const controlsContainer = document.createElement('div');
   controlsContainer.className = 'controls-container';
   controlsContainer.id = 'controlsContainer';
-  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
-  app.insertBefore(controlsContainer, heroPreviewContainer);
+  mainContainer.appendChild(controlsContainer);
   renderReturnButton();
+  renderHeroEditorButton();
 }
 
 function renderReturnButton() {
