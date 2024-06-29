@@ -48,18 +48,37 @@ body {
   height: 650px;
 }
 
+.controls-container {
+  width: 50%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #192136;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1s ease-out;
+}
+
+.hide-element {
+  display: none;
+}
+
 .return-container {
   animation: fadeIn 1s ease-out;
   width: 50px;
   height: 50px;
-  margin-bottom: 30px;
+  border-color: white;
+  border-style: solid;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 100%;
   background-color: rgb(25, 33, 54);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  transition: transform 0.3s ease, box-shadow 0.5s ease;
   cursor: pointer;
 }
 .return-container:hover {
@@ -110,8 +129,8 @@ body {
 }
 
 .hero-card:hover {
-  transform: scale(99%);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(99.5%);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
 }
 
 .search-bar-container {

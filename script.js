@@ -15,19 +15,18 @@ function renderHomePage() {
   renderSearchContainer();
 
   function removeHomeElementsIfExist() {
+    const controlsContainer = document.getElementById('controlsContainer');
     const heroPreviewContainer = document.getElementById('heroPreviewContainer');
     const editorButton = document.getElementById('heroEditorButton');
     const searchContainer = document.getElementById('searchContainer');
 
-    if (editorButton) {
-      app.removeChild(editorButton);
-    }
-    if (searchContainer) {
-      app.removeChild(searchContainer);
-    }
-    if (searchContainer) {
-      app.removeChild(heroPreviewContainer);
-    }
+    const elements = [controlsContainer, heroPreviewContainer, editorButton, searchContainer];
+
+    elements.forEach((element) => {
+      if (element) {
+        app.removeChild(element);
+      }
+    });
   }
 }
 function renderPreviewContainer() {
@@ -270,7 +269,8 @@ function renderHeroCard() {
   const heroPreviewContainer = document.getElementById('heroPreviewContainer');
   heroPreviewContainer.appendChild(heroCard);
   // renderSkills();
-  renderReturnButton();
+  //renderReturnButton();
+  renderControlsContainer();
   renderShuffleButton();
 }
 
@@ -360,23 +360,28 @@ function renderShuffleButton() {
   });
 }
 
+function renderControlsContainer() {
+  const controlsContainer = document.createElement('div');
+  controlsContainer.className = 'controls-container';
+  controlsContainer.id = 'controlsContainer';
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
+  app.insertBefore(controlsContainer, heroPreviewContainer);
+  renderReturnButton();
+}
+
 function renderReturnButton() {
+  const controlsContainer = document.getElementById('controlsContainer');
   const returnContainer = document.createElement('div');
   returnContainer.className = 'return-container';
   returnContainer.id = 'returnContainer';
-  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
-  const app = document.getElementById('app');
-  app.insertBefore(returnContainer, heroPreviewContainer);
   const returnIcon = document.createElement('i');
   returnIcon.className = 'return-button material-icons';
   returnIcon.textContent = 'home';
   returnContainer.appendChild(returnIcon);
   returnContainer.addEventListener('click', function () {
-    const heroCard = document.getElementById('heroCard');
-    heroPreviewContainer.removeChild(heroCard);
-    app.removeChild(returnContainer);
     renderHomePage();
   });
+  controlsContainer.appendChild(returnContainer);
 }
 
 function shuffleImg(hero) {
