@@ -1,6 +1,6 @@
 let defaultHeroList = [];
-let currentHero;
 let heroesDataAvaible = false;
+let tempHero;
 console.info('Heroes data is avaible: ' + heroesDataAvaible);
 
 const app = document.getElementById('app');
@@ -123,21 +123,29 @@ async function loadHeroes() {
   }
 }
 
-function showHero() {
+function showHero(hero) {
   const heroCard = document.getElementById('heroCard');
-  if (currentHero.name !== 'New Hero') {
-    heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${currentHero.imageUrl})`;
+  if (hero.name !== 'New Hero') {
+    heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${hero.imageUrl})`;
   }
   renderInfoContainer();
-  renderInfos();
+  renderInfos(hero);
   renderAttributesContainer();
-  renderAttributes();
-  renderMainAttr();
+  renderAttributes(hero);
+  renderMainAttr(hero);
+  tempHero = {
+    name: hero.name,
+    mainAttr: hero.mainAttr,
+    agi: hero.agi,
+    str: hero.str,
+    intel: hero.intel,
+    imageUrl: hero.imageUrl,
+  };
 }
 
-function renderMainAttr() {
+function renderMainAttr(hero) {
   clearAttrIcons();
-  const mainAttr = currentHero.mainAttr;
+  const mainAttr = hero.mainAttr;
   let attrIcon;
 
   switch (mainAttr) {
@@ -155,10 +163,7 @@ function renderMainAttr() {
       return;
   }
 
-  attrIcon.style.borderWidth = '3px';
-  attrIcon.style.borderColor = 'white';
-  attrIcon.style.borderStyle = 'solid';
-  attrIcon.style.borderRadius = '100%';
+  attrIcon.classList.add('selected-attribute');
 }
 
 function showHeroEditor() {
@@ -167,11 +172,11 @@ function showHeroEditor() {
   }
 
   const emptyHero = { name: 'New Hero', mainAttr: undefined, agi: 0, str: 0, intel: 0 };
-  currentHero = emptyHero;
+
   const heroPreviewContainer = document.getElementById('heroPreviewContainer');
   if (!heroPreviewContainer) {
     renderHeroCard();
-    showHero();
+    showHero(emptyHero);
   }
 }
 
@@ -184,8 +189,7 @@ function searchHero(queryHero) {
     hero.name.toLowerCase().startsWith(queryHero.toLowerCase())
   );
   if (result) {
-    currentHero = result;
-    renderResult(currentHero);
+    renderResult(result);
   } else {
     clearResult();
   }
@@ -218,15 +222,14 @@ function renderResult(hero) {
     resultTitle.className = 'result-title';
     resultTitleSection.appendChild(resultTitle);
 
-    result.addEventListener('click', function () {
-      renderHeroCard();
-      showHero();
-    });
-
     resultContainer.appendChild(result);
   }
 
   updateResultData(hero);
+  result.onclick = function () {
+    renderHeroCard();
+    showHero(hero);
+  };
 }
 
 function updateResultData(hero) {
@@ -282,10 +285,10 @@ function renderInfoContainer() {
   heroCard.append(infoContainer);
 }
 
-function renderInfos() {
+function renderInfos(hero) {
   const heroName = document.createElement('div');
   heroName.className = 'hero-name';
-  heroName.textContent = currentHero.name;
+  heroName.textContent = hero.name;
   heroName.contentEditable = 'true';
   const infoContainer = document.getElementById('infoContainer');
   infoContainer.appendChild(heroName);
@@ -305,13 +308,13 @@ function renderAttributesContainer() {
   heroCard.appendChild(attributesContainer);
 }
 
-function renderAttributes() {
+function renderAttributes(hero) {
   const attributesContainer = document.getElementById('attributesContainer');
 
   const AttributesData = {
-    agility: currentHero.agi,
-    strength: currentHero.str,
-    intelligence: currentHero.intel,
+    agility: hero.agi,
+    strength: hero.str,
+    intelligence: hero.intel,
   };
 
   Object.keys(AttributesData).forEach((attr) => {
@@ -325,6 +328,13 @@ function renderAttributes() {
     icon.id = `${attr}Icon`;
     icon.src = `https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/icons/hero_${attr}.png`;
     attrRow.appendChild(icon);
+    icon.addEventListener('click', () => {
+      clearAttrIcons();
+      icon.classList.add('selected-attribute');
+
+      const attributeName = icon.id.replace(/Icon$/, '');
+      tempHero = { ...tempHero, mainAttr: attributeName };
+    });
 
     const value = document.createElement('div');
     value.className = 'value';
@@ -356,7 +366,7 @@ function renderShuffleButton() {
   heroShuffleIcon.textContent = 'shuffle';
   shuffleContainer.append(heroShuffleIcon);
   heroShuffleIcon.addEventListener('click', function () {
-    shuffleImg(currentHero);
+    shuffleImg();
   });
 }
 
@@ -368,6 +378,22 @@ function renderControlsContainer() {
   mainContainer.appendChild(controlsContainer);
   renderReturnButton();
   renderHeroEditorButton();
+  renderSaveButtonContainer();
+}
+
+function renderSaveButtonContainer() {
+  const saveButtonContainer = document.createElement('div');
+  saveButtonContainer.className = 'save-button-container';
+  saveButtonContainer.id = 'saveButtonContainer';
+  const saveIcon = document.createElement('i');
+  saveIcon.className = 'material-icons';
+  saveIcon.textContent = 'save';
+  saveButtonContainer.appendChild(saveIcon);
+  saveButtonContainer.addEventListener('click', () => {
+    saveHero();
+  });
+  const controlsContainer = document.getElementById('controlsContainer');
+  controlsContainer.appendChild(saveButtonContainer);
 }
 
 function renderReturnButton() {
@@ -385,55 +411,44 @@ function renderReturnButton() {
   controlsContainer.appendChild(returnContainer);
 }
 
-function shuffleImg(hero) {
-  const randomImg = defaultHeroList[Math.floor(Math.random() * defaultHeroList.length)].imageUrl;
-  hero.imageUrl = randomImg;
-  updateImgBg();
+function shuffleImg() {
+  const imgUrl = defaultHeroList[Math.floor(Math.random() * defaultHeroList.length)].imageUrl;
+  tempHero = { ...tempHero, imageUrl: imgUrl };
+  updateImgBg(imgUrl);
 }
 
-function updateImgBg() {
-  heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${currentHero.imageUrl})`;
+function updateImgBg(imgUrl) {
+  const heroCard = document.getElementById('heroCard');
+  heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${imgUrl})`;
 }
+
 function clearAttrIcons() {
   const icons = document.querySelectorAll('#strengthIcon, #agilityIcon, #intelligenceIcon');
   icons.forEach((icon) => {
-    icon.style.borderWidth = '';
-    icon.style.borderColor = '';
-    icon.style.borderStyle = '';
-    icon.style.borderRadius = '';
+    icon.classList.remove('selected-attribute');
   });
 }
 
 function allowOnlyNumbers(element) {
-  element.addEventListener('keydown', function (event) {
-    const key = event.key;
-    const content = element.textContent;
-
-    if (
-      ['Backspace', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Delete', 'Tab'].includes(
-        key
-      )
-    ) {
-      return;
+  element.addEventListener('input', function (e) {
+    let content = e.target.innerText.replace(/\D/g, '').slice(0, 2);
+    if (content === '' || content === '00') {
+      content = '0';
     }
-
-    if (!/^\d$/.test(key) || content.length >= 2) {
-      event.preventDefault();
-    }
+    e.target.innerText = content;
   });
+}
 
-  element.addEventListener('input', function () {
-    let value = element.textContent.replace(/[^\d]/g, '');
-    if (value.length > 2) {
-      value = value.slice(0, 2);
-    }
-    if (value === '') {
-      value = '0';
-    }
-    element.textContent = value;
-  });
+function saveHero() {
+  getInputAttrs();
+  console.info(tempHero);
+}
 
-  if (!/^\d{1,2}$/.test(element.textContent)) {
-    element.textContent = '0';
-  }
+function getInputAttrs() {
+  tempHero = {
+    ...tempHero,
+    agi: parseInt(document.getElementById('agilityValue').textContent, 10) || 0,
+    str: parseInt(document.getElementById('strengthValue').textContent, 10) || 0,
+    intel: parseInt(document.getElementById('intelligenceValue').textContent, 10) || 0,
+  };
 }

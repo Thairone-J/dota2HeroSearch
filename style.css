@@ -13,7 +13,6 @@ body {
   width: 1280px;
   height: 900px;
   flex-direction: column;
-
 }
 
 .footer {
@@ -22,7 +21,7 @@ body {
   bottom: 0;
   width: 100%;
   height: 30px;
-  background-color: rgb(2, 15, 36);
+  background-color: rgb(25, 33, 54);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,7 +33,6 @@ body {
 }
 
 .app {
-
   height: 800px;
   min-width: 800px;
   display: flex;
@@ -51,8 +49,7 @@ body {
 }
 
 .controls-container {
- 
-
+  margin-left: -2px;
   width: 100px;
   height: 350px;
   display: flex;
@@ -62,9 +59,10 @@ body {
   transform: translateY(-120px);
   position: fixed;
   left: 0;
-  background: rgb(176, 188, 222);
-  backdrop-filter: blur(10px); 
-  border-radius: 0 10px 10px 0 ;
+  border-style: solid;
+  border-color: rgb(25, 33, 54);
+  backdrop-filter: blur(10px);
+  border-radius: 0 10px 10px 0;
   margin-bottom: 30px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   animation: fadeIn 1s ease-out;
@@ -85,18 +83,48 @@ body {
   align-items: center;
   border-radius: 100%;
   background-color: rgb(25, 33, 54);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 20px rgba(25, 33, 54, 0.1);
   transition: transform 0.3s ease, box-shadow 0.5s ease;
   cursor: pointer;
 }
 .return-container:hover {
-  transform: scale(95%);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(99%);
+  box-shadow: 0 0px 30px rgba(25, 33, 54, 0.4);
 }
 
 .return-button {
   font-size: 2.2rem;
   color: white;
+  transition: transform 300ms ease;
+  animation: fadeIn 1.5 ease-out;
+}
+
+.save-button-container {
+  animation: fadeIn 1s ease-out;
+  width: 50px;
+  height: 50px;
+  border-color: white;
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: rgb(25, 33, 54);
+  box-shadow: 0 0px 20px rgba(25, 33, 54, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.5s ease;
+  cursor: pointer;
+}
+
+.save-button-container:hover {
+  transform: scale(99%);
+  box-shadow: 0 0px 30px rgba(25, 33, 54, 0.4);
+}
+
+.save-button-container i {
+  font-size: 2.2rem;
+  color: white;
+  transition: transform 300ms ease;
+  animation: fadeIn 1.5 ease-out;
 }
 
 .hero-editor-button {
@@ -110,14 +138,14 @@ body {
   align-items: center;
   border-radius: 100%;
   background-color: rgb(25, 33, 54);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 20px rgba(25, 33, 54, 0.1);
   transition: transform 0.3s ease, box-shadow 0.5s ease;
   cursor: pointer;
 }
 
-.hero-editor-button:hover{
-  transform: scale(95%);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+.hero-editor-button:hover {
+  transform: scale(99%);
+  box-shadow: 0 0px 30px rgba(25, 33, 54, 0.4);
 }
 
 .hero-editor-button i {
@@ -126,7 +154,6 @@ body {
   transition: transform 300ms ease;
   animation: fadeIn 1.5 ease-out;
 }
-
 
 .hero-card {
   animation: fadeIn 1s ease-out;
@@ -368,6 +395,13 @@ body {
   color: rgb(255, 255, 255);
 }
 
+.selected-attribute {
+  border-width: 3px;
+  border-color: white;
+  border-style: solid;
+  border-radius: 100%;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -387,24 +421,12 @@ body {
     opacity: 0;
   }
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes fadeInRotate {
-  from {
-  opacity: 0;
-    transform: rotate(0deg);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(360deg);
   }
 }
 
