@@ -15,6 +15,7 @@ function renderHomePage() {
   renderSearchContainer();
 
   function removeHomeElementsIfExist() {
+    tempHero = undefined;
     const heroPreviewContainer = document.getElementById('heroPreviewContainer');
     const searchContainer = document.getElementById('searchContainer');
 
@@ -445,10 +446,14 @@ function saveHero() {
 }
 
 function getInputAttrs() {
-  tempHero = {
-    ...tempHero,
-    agi: parseInt(document.getElementById('agilityValue').textContent, 10) || 0,
-    str: parseInt(document.getElementById('strengthValue').textContent, 10) || 0,
-    intel: parseInt(document.getElementById('intelligenceValue').textContent, 10) || 0,
-  };
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
+
+  if (heroPreviewContainer) {
+    tempHero = {
+      ...tempHero,
+      agi: parseInt(document.getElementById('agilityValue').textContent, 10) || 0,
+      str: parseInt(document.getElementById('strengthValue').textContent, 10) || 0,
+      intel: parseInt(document.getElementById('intelligenceValue').textContent, 10) || 0,
+    };
+  }
 }
