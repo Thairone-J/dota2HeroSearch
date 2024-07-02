@@ -440,17 +440,40 @@ function allowOnlyNumbers(element) {
   });
 }
 
-function saveHero() {
-  getInputAttrs();
-  console.info(tempHero);
+async function saveHero() {
+  getInputs();
+  const hero = {
+    name: tempHero.name,
+    main_attr: tempHero.mainAttr,
+    agi: tempHero.agi,
+    str: tempHero.str,
+    intel: tempHero.intel,
+    image_url: tempHero.imageUrl,
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/heroes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(hero),
+    });
+
+    const data = await response.text();
+    console.info(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
-function getInputAttrs() {
+function getInputs() {
   const heroPreviewContainer = document.getElementById('heroPreviewContainer');
 
   if (heroPreviewContainer) {
     tempHero = {
       ...tempHero,
+      name: document.querySelector('.hero-name').textContent,
       agi: parseInt(document.getElementById('agilityValue').textContent, 10) || 0,
       str: parseInt(document.getElementById('strengthValue').textContent, 10) || 0,
       intel: parseInt(document.getElementById('intelligenceValue').textContent, 10) || 0,
