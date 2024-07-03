@@ -105,6 +105,7 @@ async function loadHeroes() {
     const heroes = await response.json();
     console.info('Heroes data has been requested');
     defaultHeroList = heroes.map((hero) => ({
+      id: hero.id,
       name: hero.name,
       mainAttr: hero.main_attr,
       agi: hero.agi,
@@ -135,6 +136,7 @@ function showHero(hero) {
   renderAttributes(hero);
   renderMainAttr(hero);
   tempHero = {
+    id: hero.id,
     name: hero.name,
     mainAttr: hero.mainAttr,
     agi: hero.agi,
@@ -441,16 +443,49 @@ function allowOnlyNumbers(element) {
 }
 
 async function saveHero() {
-  getInputs();
-  const hero = {
-    name: tempHero.name,
-    main_attr: tempHero.mainAttr,
-    agi: tempHero.agi,
-    str: tempHero.str,
-    intel: tempHero.intel,
-    image_url: tempHero.imageUrl,
-  };
+  if (tempHero) {
+    getInputs();
+    const hero = {
+      id: tempHero.id,
+      name: tempHero.name,
+      main_attr: tempHero.mainAttr,
+      agi: tempHero.agi,
+      str: tempHero.str,
+      intel: tempHero.intel,
+      image_url: tempHero.imageUrl,
+    };
 
+    const heroesIds = new Set(defaultHeroList.map((item) => item.id));
+    const heroExists = idExists(heroesIds, hero.id);
+    if (heroExists) {
+      updateHero(hero);
+      return;
+    }
+
+    function idExists(set, id) {
+      return set.has(id);
+    }
+  }
+}
+
+async function updateHero(hero) {
+  try {
+    const response = await fetch('http://localhost:3000/heroes', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(hero),
+    });
+
+    const data = await response.text();
+    console.info(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+async function saveNewHero(hero) {
   try {
     const response = await fetch('http://localhost:3000/heroes', {
       method: 'POST',
