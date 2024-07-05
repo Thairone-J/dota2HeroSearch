@@ -28,8 +28,6 @@ function renderHomePage() {
     });
   }
 }
-//
-//
 // 👇    👇    SIDE CONTROLS    👇    👇
 //
 //
@@ -41,7 +39,8 @@ function renderControlsContainer() {
   mainContainer.appendChild(controlsContainer);
   renderHomeButton();
   renderCreateHeroButton();
-  renderSaveButtonContainer();
+  renderSaveButton();
+  renderDeleteButton();
 }
 
 function renderHomeButton() {
@@ -75,7 +74,7 @@ function renderCreateHeroButton() {
   });
 }
 
-function renderSaveButtonContainer() {
+function renderSaveButton() {
   const saveButtonContainer = document.createElement('div');
   saveButtonContainer.className = 'control-button';
   saveButtonContainer.id = 'saveButtonContainer';
@@ -90,12 +89,19 @@ function renderSaveButtonContainer() {
   controlsContainer.appendChild(saveButtonContainer);
 }
 
-function deleteButtonContaienr() {
-  const controlsContainer = document.getElementById('controlsContaienr');
-  const deleteButtonContaienr = document.createElement('div');
+function renderDeleteButton() {
+  const controlsContainer = document.getElementById('controlsContainer');
+  const deleteButtonContainer = document.createElement('div');
+  deleteButtonContainer.className = 'control-button';
+  const deleteIcon = document.createElement('i');
+  deleteIcon.className = 'material-icons';
+  deleteIcon.textContent = 'delete';
+  deleteButtonContainer.appendChild(deleteIcon);
+  deleteButtonContainer.addEventListener('click', () => {
+    deleteHero();
+  });
+  controlsContainer.appendChild(deleteButtonContainer);
 }
-//
-//
 // 👇    👇    SEARCH BAR    👇    👇
 //
 //
@@ -213,8 +219,6 @@ function renderPreviewContainer() {
   heroPreviewContainer.id = 'heroPreviewContainer';
   app.appendChild(heroPreviewContainer);
 }
-//
-//
 // 👇    👇    HERO CARD    👇    👇
 //
 //
@@ -405,8 +409,6 @@ function searchHero(queryHero) {
     clearResult();
   }
 }
-//
-//
 // 👇    👇    CRUD   👇    👇
 //
 //
@@ -515,9 +517,27 @@ async function saveNewHero(hero) {
   }
 }
 
-async function deleteHero(hero) {}
-//
-//
+async function deleteHero() {
+  if (tempHero && tempHero.id) {
+    try {
+      const response = await fetch('http://localhost:3000/heroes', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: tempHero.id }),
+      });
+
+      const data = await response.text();
+      console.info(data);
+      renderHomePage();
+      loadHeroes();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+}
+
 // 👇    👇    UTILITY   👇    👇
 //
 //
