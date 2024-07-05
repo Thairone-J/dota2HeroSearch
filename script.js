@@ -100,6 +100,7 @@ function renderSearchBar() {
 }
 
 async function loadHeroes() {
+  defaultHeroList = undefined;
   try {
     const response = await fetch('http://localhost:3000/heroes');
     const heroes = await response.json();
@@ -455,6 +456,9 @@ async function saveHero() {
       image_url: tempHero.imageUrl,
     };
 
+    function idExists(set, id) {
+      return set.has(id);
+    }
     const heroesIds = new Set(defaultHeroList.map((item) => item.id));
     const heroExists = idExists(heroesIds, hero.id);
     if (heroExists) {
@@ -462,10 +466,22 @@ async function saveHero() {
       return;
     }
 
-    function idExists(set, id) {
-      return set.has(id);
+    if (
+      !hero.main_attr ||
+      hero.agi === 0 ||
+      hero.str === 0 ||
+      hero.intel === 0 ||
+      !hero.image_url
+    ) {
+      alert('image, attributes and main attribute are required to create a new Hero!');
+      return;
     }
+
+    loadHeroes();
+
+    renderHomePage();
   }
+  alert('No Hero to save here..');
 }
 
 async function updateHero(hero) {
