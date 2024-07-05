@@ -358,7 +358,14 @@ function renderAttributes(hero) {
       icon.classList.add('selected-attribute');
 
       const attributeName = icon.id.replace(/Icon$/, '');
-      tempHero = { ...tempHero, mainAttr: attributeName };
+
+      const attributeMap = {
+        agility: 'agi',
+        strength: 'str',
+        intelligence: 'intel',
+      };
+
+      tempHero = { ...tempHero, mainAttr: attributeMap[attributeName] };
     });
 
     const value = document.createElement('div');
