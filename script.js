@@ -477,11 +477,11 @@ async function saveHero() {
       return;
     }
 
-    loadHeroes();
-
+    await saveNewHero(hero);
     renderHomePage();
+
+    loadHeroes();
   }
-  alert('No Hero to save here..');
 }
 
 async function updateHero(hero) {
