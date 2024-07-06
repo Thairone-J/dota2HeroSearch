@@ -204,7 +204,7 @@ function clearResult() {
   const resultContainer = document.getElementById('resultContainer');
   const result = document.getElementById('result');
   if (result) {
-    result.style.animation = 'fadeOut 300ms ease-out forwards';
+    result.style.animation = 'fadeOutBlur 500ms ease-out forwards';
     setTimeout(() => {
       if (result && resultContainer.contains(result)) {
         resultContainer.removeChild(result);
@@ -227,6 +227,8 @@ function showHero(hero) {
   if (hero.name !== 'New Hero') {
     heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${hero.imageUrl})`;
   }
+
+  heroCard.classList.add('in-blur');
   renderInfoContainer();
   renderInfos(hero);
   renderAttributesContainer();
@@ -258,24 +260,17 @@ function showHeroEditor() {
 }
 
 function renderHeroCard() {
+  const searchContainer = document.getElementById('searchContainer');
+  if (searchContainer) {
+    searchContainer.classList.add('out-blur');
+  }
+
   renderPreviewContainer();
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
   const heroCard = document.createElement('div');
   heroCard.className = 'hero-card';
   heroCard.id = 'heroCard';
-
-  const searchContainer = document.getElementById('searchContainer');
-
-  const elements = [searchContainer];
-
-  elements.forEach((element) => {
-    if (element) {
-      element.style.display = 'none';
-    }
-  });
-  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
   heroPreviewContainer.appendChild(heroCard);
-  // renderSkills();
-  //renderReturnButton();
   renderShuffleButton();
 }
 
