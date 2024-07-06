@@ -569,11 +569,13 @@ function clearAttrIcons() {
 
 function allowOnlyNumbers(element) {
   element.addEventListener('input', function (e) {
-    let content = e.target.innerText.replace(/\D/g, '').slice(0, 2);
-    if (content === '' || content === '00') {
-      content = '0';
-    }
+    let content = e.target.innerText.replace(/\D/g, '');
+
+    content = content === '' ? '0' : content.slice(-2);
+
     e.target.innerText = content;
+
+    document.getSelection().collapse(e.target, 1);
   });
 }
 
