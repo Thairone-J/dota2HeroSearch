@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function renderHomePage() {
   removeHomeElementsIfExist();
-  renderSearchContainer();
+  setTimeout(() => {
+    renderSearchContainer();
+  }, 600);
 
   function removeHomeElementsIfExist() {
     tempHero = undefined;
@@ -23,7 +25,10 @@ function renderHomePage() {
 
     elements.forEach((element) => {
       if (element) {
-        app.removeChild(element);
+        element.style.animation = 'fadeOutBlur 500ms ease-out forwards';
+        setTimeout(() => {
+          app.removeChild(element);
+        }, 550);
       }
     });
   }
@@ -128,6 +133,7 @@ function renderSearchContainer() {
 
 function renderSearchBar() {
   const searchBarContainer = document.getElementById('searchBarContainer');
+
   const searchBar = document.createElement('div');
   searchBar.className = 'search-bar';
   searchBar.id = 'searchBar';
