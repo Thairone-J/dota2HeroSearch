@@ -1,6 +1,7 @@
 let defaultHeroList = [];
 let heroesDataAvaible = false;
 let tempHero;
+const BASE_URL = 'http://ec2-13-59-1-67.us-east-2.compute.amazonaws.com:3000';
 console.info('Heroes data is avaible: ' + heroesDataAvaible);
 
 const app = document.getElementById('app');
@@ -423,7 +424,7 @@ function searchHero(queryHero) {
 async function loadHeroes() {
   defaultHeroList = undefined;
   try {
-    const response = await fetch('http://localhost:3000/heroes');
+    const response = await fetch(`${BASE_URL}/heroes`);
     const heroes = await response.json();
     console.info('Heroes data has been requested');
     defaultHeroList = heroes.map((hero) => ({
@@ -493,7 +494,7 @@ async function saveHero() {
 
 async function updateHero(hero) {
   try {
-    const response = await fetch('http://localhost:3000/heroes', {
+    const response = await fetch(`${BASE_URL}/heroes`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -510,7 +511,7 @@ async function updateHero(hero) {
 
 async function saveNewHero(hero) {
   try {
-    const response = await fetch('http://localhost:3000/heroes', {
+    const response = await fetch(`${BASE_URL}/heroes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -528,7 +529,7 @@ async function saveNewHero(hero) {
 async function deleteHero() {
   if (tempHero && tempHero.id) {
     try {
-      const response = await fetch('http://localhost:3000/heroes', {
+      const response = await fetch(`${BASE_URL}/heroes`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
