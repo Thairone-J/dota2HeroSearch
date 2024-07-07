@@ -1,13 +1,13 @@
-import { createConnection } from 'mysql2';
+import { pool } from 'mysql2';
 import heroes from './heroes.js';
 
-const connection = createConnection({
+const pool = createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
 });
 
-connection.connect();
+pool.connect();
 
 const queries = [
   'CREATE DATABASE IF NOT EXISTS ' + process.env.DB_NAME,
@@ -32,7 +32,7 @@ const getQueryName = (query) => {
 
 queries.forEach((query) => {
   const queryName = getQueryName(query);
-  connection.query(query, (err) => {
+  pool.query(query, (err) => {
     if (err) {
       console.error(`Error in: ${queryName}: `, err.message);
     } else {
@@ -44,7 +44,7 @@ queries.forEach((query) => {
 heroes.forEach((hero) => {
   const query =
     'INSERT INTO heroes (name, main_attr, agi, str, intel, image_url) VALUES (?, ?, ?, ?, ?, ?)';
-  connection.query(
+  pool.query(
     query,
     [hero.name, hero.main_attr, hero.attrs.agi, hero.attrs.str, hero.attrs.intel, hero.image_url],
     (err) => {
@@ -57,4 +57,4 @@ heroes.forEach((hero) => {
   );
 });
 
-connection.end();
+pool.end();
