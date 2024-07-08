@@ -126,10 +126,9 @@ const heroes = [
 
 heroes.forEach((hero) => {
   const heroNameLowercase = hero.name.toLowerCase().replace(/ /g, '_');
-  hero.image_url = `https://cdn.dota2.com/apps/dota2/images/heroes/${heroNameLowercase}_vert.jpg`;
+  hero.image_vert = `images/heroes/vert/${heroNameLowercase}.jpg`;
 });
 
 export default heroes;
-
 
 // https://cdn.akamai.steamstatic.com/apps/dota2/videos/dota_react/heroes/renders/pudge.webm

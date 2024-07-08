@@ -34,16 +34,16 @@ app.get('/heroes', (req, res) => {
 });
 
 app.post('/heroes', (req, res) => {
-  const { name, main_attr, agi, str, intel, image_url } = req.body;
+  const { name, main_attr, agi, str, intel, image_vert } = req.body;
 
-  if (!name || !main_attr || !agi || !str || !intel || !image_url) {
+  if (!name || !main_attr || !agi || !str || !intel || !image_vert) {
     res.status(400).send('All hero fields are required');
     return;
   }
 
   const query =
-    'INSERT INTO heroes (name, main_attr, agi, str, intel, image_url) VALUES (?, ?, ?, ?, ?, ?)';
-  const values = [name, main_attr, agi, str, intel, image_url];
+    'INSERT INTO heroes (name, main_attr, agi, str, intel, image_vert) VALUES (?, ?, ?, ?, ?, ?)';
+  const values = [name, main_attr, agi, str, intel, image_vert];
 
   pool.query(query, values, (err, results) => {
     if (err) {
@@ -56,15 +56,15 @@ app.post('/heroes', (req, res) => {
 });
 
 app.put('/heroes', (req, res) => {
-  const { name, main_attr, agi, str, intel, image_url, id } = req.body;
+  const { name, main_attr, agi, str, intel, image_vert, id } = req.body;
 
-  if (!id || !name || !main_attr || !agi || !str || !intel || !image_url) {
+  if (!id || !name || !main_attr || !agi || !str || !intel || !image_vert) {
     res.status(400).send('All hero fields are required');
     return;
   }
 
-  const query = `UPDATE heroes SET name = ?, main_attr = ?, agi = ?, str = ?, intel = ?, image_url = ? WHERE id = ?`;
-  const values = [name, main_attr, agi, str, intel, image_url, id];
+  const query = `UPDATE heroes SET name = ?, main_attr = ?, agi = ?, str = ?, intel = ?, image_vert = ? WHERE id = ?`;
+  const values = [name, main_attr, agi, str, intel, image_vert, id];
 
   pool.query(query, values, (err, result) => {
     if (err) {

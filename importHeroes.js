@@ -25,7 +25,7 @@ const queries = [
     agi INT NOT NULL,
     str INT NOT NULL,
     intel INT NOT NULL,
-    image_url VARCHAR(255) NOT NULL
+    image_vert VARCHAR(255) NOT NULL
   )`,
 ];
 
@@ -50,7 +50,7 @@ const runQueries = async () => {
 
     for (const hero of heroes) {
       const query =
-        'INSERT INTO heroes (name, main_attr, agi, str, intel, image_url) VALUES (?, ?, ?, ?, ?, ?)';
+        'INSERT INTO heroes (name, main_attr, agi, str, intel, image_vert) VALUES (?, ?, ?, ?, ?, ?)';
       try {
         await connection.query(query, [
           hero.name,
@@ -58,7 +58,7 @@ const runQueries = async () => {
           hero.attrs.agi,
           hero.attrs.str,
           hero.attrs.intel,
-          hero.image_url,
+          hero.image_vert,
         ]);
         console.log(`${hero.name} imported!`);
       } catch (err) {

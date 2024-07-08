@@ -1,7 +1,7 @@
 let defaultHeroList = [];
 let heroesDataAvaible = false;
 let tempHero;
-const BASE_URL = 'http://ec2-13-59-1-67.us-east-2.compute.amazonaws.com:3000';
+const BASE_URL = 'http://localhost:3000';
 console.info('Heroes data is avaible: ' + heroesDataAvaible);
 
 const app = document.getElementById('app');
@@ -201,7 +201,7 @@ function updateResultData(hero) {
   const resultTitle = document.getElementById('resultTitle');
   resultTitle.textContent = hero.name;
   const resultImage = document.getElementById('resultPicture');
-  resultImage.style.backgroundImage = `url(${hero.imageUrl})`;
+  resultImage.style.backgroundImage = `url(${hero.imageVert})`;
   resultImage.style.backgroundPosition = 'center';
   resultImage.style.backgroundSize = '110%';
   resultImage.style.backgroundRepeat = 'no-repeat';
@@ -232,7 +232,7 @@ function renderPreviewContainer() {
 function showHero(hero) {
   const heroCard = document.getElementById('heroCard');
   if (hero.name !== 'New Hero') {
-    heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${hero.imageUrl})`;
+    heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${hero.imageVert})`;
   }
 
   heroCard.classList.add('in-blur');
@@ -248,7 +248,7 @@ function showHero(hero) {
     agi: hero.agi,
     str: hero.str,
     intel: hero.intel,
-    imageUrl: hero.imageUrl,
+    imageVert: hero.imageVert,
   };
 }
 
@@ -434,7 +434,7 @@ async function loadHeroes() {
       agi: hero.agi,
       str: hero.str,
       intel: hero.intel,
-      imageUrl: hero.image_url,
+      imageVert: hero.image_vert,
     }));
 
     if (defaultHeroList.length > 0) {
@@ -458,7 +458,7 @@ async function saveHero() {
       agi: tempHero.agi,
       str: tempHero.str,
       intel: tempHero.intel,
-      image_url: tempHero.imageUrl,
+      image_vert: tempHero.imageVert,
     };
 
     function idExists(set, id) {
@@ -479,7 +479,7 @@ async function saveHero() {
       hero.agi === 0 ||
       hero.str === 0 ||
       hero.intel === 0 ||
-      !hero.image_url
+      !hero.image_vert
     ) {
       alert('image, attributes and main attribute are required to create a new Hero!');
       return;
@@ -551,14 +551,14 @@ async function deleteHero() {
 //
 //
 function shuffleImg() {
-  const imgUrl = defaultHeroList[Math.floor(Math.random() * defaultHeroList.length)].imageUrl;
-  tempHero = { ...tempHero, imageUrl: imgUrl };
-  updateImgBg(imgUrl);
+  const imgVert = defaultHeroList[Math.floor(Math.random() * defaultHeroList.length)].imageVert;
+  tempHero = { ...tempHero, imageVert: imgVert };
+  updateImgBg(imgVert);
 }
 
-function updateImgBg(imgUrl) {
+function updateImgBg(img) {
   const heroCard = document.getElementById('heroCard');
-  heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${imgUrl})`;
+  heroCard.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.163), rgba(0, 0, 0, 0.585)), url(${img})`;
 }
 
 function clearAttrIcons() {
