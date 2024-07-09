@@ -39,7 +39,7 @@ body {
   top: 0;
   position: fixed;
   left: 0;
-  margin-top: 50px;
+  margin-top: 200px;
   backdrop-filter: blur(10px);
   border-radius: 0 10px 10px 0;
   margin-bottom: 30px;
@@ -51,25 +51,28 @@ body {
   animation: fadeIn 1s ease-out;
   width: 50px;
   height: 50px;
-
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.405);
+  border-width: 1px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 0px 20px rgba(25, 33, 54, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.5s ease;
+  background-color: rgb(25, 33, 54);
+
+  box-shadow: 0 0px 20px rgba(25, 33, 54, 0.4);
+  transition: box-shadow 0.3s ease;
   cursor: pointer;
 }
-.control-button:hover {
-  transform: scale(99%);
-  box-shadow: 0 0px 30px rgba(25, 33, 54, 0.4);
+
+.control-button img {
+  filter: brightness(0) invert(1); /* Transforma o SVG em branco */
+  opacity: 0.405; /* Define a transparência */
 }
-.control-button i {
-  font-size: 1.5rem;
-  color: rgb(25, 33, 54);
-  transition: transform 300ms ease;
-  animation: fadeIn 1.5 ease-out;
+
+.control-button:hover {
+  background-color: rgb(36, 54, 78);
+  box-shadow: 0 0px 20px rgba(216, 216, 216, 0.4);
 }
 
 .search-container {
@@ -282,16 +285,15 @@ body {
   justify-content: end;
 }
 
-.shuffle-button-container i {
+.shuffle-button-container img {
   margin-right: 10px;
-  font-size: 36px;
-  transition: transform 300ms ease;
   cursor: pointer;
-  color: rgb(255, 255, 255);
-  color: rgba(255, 255, 255, 0.732);
+  width: 42px;
+  height: 42px;
+  opacity: 0.405;
 }
-.shuffle-button-container i:hover {
-  color: rgb(255, 255, 255);
+.shuffle-button-container img:hover {
+  opacity: 1;
 }
 
 .selected-attribute {

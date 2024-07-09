@@ -54,9 +54,8 @@ function renderHomeButton() {
   const homeButtonContainer = document.createElement('div');
   homeButtonContainer.className = 'control-button';
   homeButtonContainer.id = 'homeButtonContainer';
-  const homeIcon = document.createElement('i');
-  homeIcon.className = 'material-icons';
-  homeIcon.textContent = 'home';
+  const homeIcon = document.createElement('img');
+  homeIcon.src = './images/icons/home.svg';
   homeButtonContainer.appendChild(homeIcon);
   homeButtonContainer.addEventListener('click', function () {
     renderHomePage();
@@ -69,9 +68,8 @@ function renderCreateHeroButton() {
   const createHeroButton = document.createElement('div');
   createHeroButton.className = 'control-button';
   createHeroButton.id = 'createHeroButton';
-  const icon = document.createElement('i');
-  icon.className = 'material-icons';
-  icon.textContent = 'add';
+  const icon = document.createElement('img');
+  icon.src = './images/icons/add.svg';
   createHeroButton.appendChild(icon);
 
   controlsContainer.appendChild(createHeroButton);
@@ -84,9 +82,8 @@ function renderSaveButton() {
   const saveButtonContainer = document.createElement('div');
   saveButtonContainer.className = 'control-button';
   saveButtonContainer.id = 'saveButtonContainer';
-  const saveIcon = document.createElement('i');
-  saveIcon.className = 'material-icons';
-  saveIcon.textContent = 'save';
+  const saveIcon = document.createElement('img');
+  saveIcon.src = './images/icons/save.svg';
   saveButtonContainer.appendChild(saveIcon);
   saveButtonContainer.addEventListener('click', () => {
     saveHero();
@@ -99,9 +96,8 @@ function renderDeleteButton() {
   const controlsContainer = document.getElementById('controlsContainer');
   const deleteButtonContainer = document.createElement('div');
   deleteButtonContainer.className = 'control-button';
-  const deleteIcon = document.createElement('i');
-  deleteIcon.className = 'material-icons';
-  deleteIcon.textContent = 'delete';
+  const deleteIcon = document.createElement('img');
+  deleteIcon.src = './images/icons/delete.svg';
   deleteButtonContainer.appendChild(deleteIcon);
   deleteButtonContainer.addEventListener('click', () => {
     deleteHero();
@@ -395,10 +391,9 @@ function renderShuffleButton() {
 
   heroCard.append(shuffleButtonContainer);
 
-  const shuffleIcon = document.createElement('i');
-  shuffleIcon.className = 'material-icons';
-  shuffleIcon.textContent = 'shuffle';
-  shuffleButtonContainer.append(shuffleIcon);
+  const shuffleIcon = document.createElement('img');
+  shuffleIcon.src = './images/icons/shuffle.svg';
+  shuffleButtonContainer.appendChild(shuffleIcon);
   shuffleIcon.addEventListener('click', function () {
     shuffleImg();
   });
