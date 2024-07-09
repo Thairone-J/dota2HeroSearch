@@ -7,9 +7,34 @@ console.info('Heroes data is avaible: ' + heroesDataAvaible);
 const app = document.getElementById('app');
 
 document.addEventListener('DOMContentLoaded', function () {
-  renderControlsContainer();
+  renderSideBar();
   renderHomePage();
 });
+
+function renderSideBar() {
+  const sideBarContainer = document.createElement('div');
+  sideBarContainer.className = 'sidebar-container';
+  sideBarContainer.id = 'sideBarContainer';
+  const mainContainer = document.getElementById('mainContainer');
+  mainContainer.appendChild(sideBarContainer);
+  renderControlsContainer();
+  renderUserSectionContainer();
+}
+
+
+
+function renderUserSectionContainer(){
+  const sideBarContainer = document.getElementById('sideBarContainer');
+  const userSectionContainer = document.createElement('div');
+  userSectionContainer.className = 'user-section-container';
+  userSectionContainer.id = 'userSectionContainer';
+  sideBarContainer.appendChild(userSectionContainer);
+
+
+}
+
+
+
 
 function renderHomePage() {
   removeHomeElementsIfExist();
@@ -38,11 +63,11 @@ function renderHomePage() {
 //
 //
 function renderControlsContainer() {
-  const mainContainer = document.getElementById('mainContainer');
+  const sideBarContainer = document.getElementById('sideBarContainer');
   const controlsContainer = document.createElement('div');
   controlsContainer.className = 'controls-container';
   controlsContainer.id = 'controlsContainer';
-  mainContainer.appendChild(controlsContainer);
+  sideBarContainer.appendChild(controlsContainer);
   renderHomeButton();
   renderCreateHeroButton();
   renderSaveButton();
@@ -139,10 +164,8 @@ function renderSearchBar() {
   input.id = 'searchInput';
   input.autocomplete = 'off';
   input.placeholder = 'Search hero..';
-  const icon = document.createElement('i');
-  icon.className = 'material-icons';
-  icon.id = 'searchButton';
-  icon.textContent = 'search';
+  const icon = document.createElement('img');
+  icon.src = './images/icons/search.svg';
 
   input.addEventListener('input', function () {
     if (input.value.trim() === '') {
