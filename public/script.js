@@ -21,20 +21,40 @@ function renderSideBar() {
   renderUserSectionContainer();
 }
 
-
-
-function renderUserSectionContainer(){
+function renderUserSectionContainer() {
   const sideBarContainer = document.getElementById('sideBarContainer');
   const userSectionContainer = document.createElement('div');
   userSectionContainer.className = 'user-section-container';
   userSectionContainer.id = 'userSectionContainer';
   sideBarContainer.appendChild(userSectionContainer);
-
+  renderHeroesListButton();
+  renderUserPicture();
 
 }
 
+function renderUserPicture() {
+  const userPictureContainer = document.createElement('div');
+  const userPicture = document.createElement('img');
+  userPicture.className = 'user-picture';
+  userPicture.id = 'userPicture';
+  userPictureContainer.className = 'user-picture-container';
+  userPictureContainer.id = 'userPictureContainer';
+  userPictureContainer.appendChild(userPicture);
+  const userSection = document.getElementById('userSectionContainer');
+  userSection.appendChild(userPictureContainer);
+}
 
+function renderHeroesListButton() {
+  const heroesListButtonContainer = document.createElement('div');
+  heroesListButtonContainer.className = ' heroes-list-button-container';
+  heroesListButtonContainer.id = 'heroesListButtonContainer';
+  const icon = document.createElement('img');
+  icon.src = './images/icons/menu.svg';
+  heroesListButtonContainer.appendChild(icon)
 
+  const userSection = document.getElementById('userSectionContainer');
+  userSection.appendChild(heroesListButtonContainer);
+}
 
 function renderHomePage() {
   removeHomeElementsIfExist();
