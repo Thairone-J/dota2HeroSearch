@@ -29,7 +29,6 @@ function renderUserSectionContainer() {
   sideBarContainer.appendChild(userSectionContainer);
   renderHeroesListButton();
   renderUserPicture();
-
 }
 
 function renderUserPicture() {
@@ -50,7 +49,7 @@ function renderHeroesListButton() {
   heroesListButtonContainer.id = 'heroesListButtonContainer';
   const icon = document.createElement('img');
   icon.src = './images/icons/menu.svg';
-  heroesListButtonContainer.appendChild(icon)
+  heroesListButtonContainer.appendChild(icon);
 
   const userSection = document.getElementById('userSectionContainer');
   userSection.appendChild(heroesListButtonContainer);
@@ -487,6 +486,7 @@ async function loadHeroes() {
 }
 
 async function saveHero() {
+  renderSavedAnimation();
   if (tempHero) {
     getInputs();
     const hero = {
@@ -528,6 +528,34 @@ async function saveHero() {
 
     loadHeroes();
   }
+}
+
+function renderSavedAnimation() {
+  const listButtonContainer = document.getElementById('heroesListButtonContainer');
+  const listIcon = listButtonContainer.querySelector('img');
+  listIcon.style.animation = 'fadeOut 300ms ease-out forwards';
+  const spinArrowIcon = document.createElement('img');
+  spinArrowIcon.src = './images/icons/spin_arrow.svg';
+  spinArrowIcon.style.animation = 'fadeIn 300ms ease-out forwards,rotate 2s ease-out forwards';
+  setTimeout(() => {
+    listButtonContainer.appendChild(spinArrowIcon);
+  }, 310);
+
+  const greenCheckIcon = document.createElement('img');
+  greenCheckIcon.src = './images/icons/green_check.svg';
+  greenCheckIcon.style.animation = 'fadeInBlur 500ms ease-out forwards';
+
+  setTimeout(() => {
+    listButtonContainer.appendChild(greenCheckIcon);
+  }, 2200);
+
+  setTimeout(() => {
+    greenCheckIcon.style.animation = 'fadeOutBlur 400ms ease-out forwards';
+  }, 3500);
+
+  setTimeout(() => {
+    listIcon.style.animation = 'fadeInBlur 300ms ease-out forwards';
+  }, 3850);
 }
 
 async function updateHero(hero) {
