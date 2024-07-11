@@ -64,6 +64,10 @@ function renderHeroesListButton() {
 
   heroesListButtonContainer.append(listIcon, spinIcon, checkIcon);
 
+  heroesListButtonContainer.addEventListener('click', () => {
+    alert();
+  });
+
   const userSection = document.getElementById('userSectionContainer');
   userSection.appendChild(heroesListButtonContainer);
 }
@@ -647,18 +651,19 @@ function getInputs() {
 }
 
 function renderSavedAnimation() {
-  const listIcon = document.getElementById('listIcon');
-  const spinIcon = document.getElementById('spinIcon');
-  const checkIcon = document.getElementById('checkIcon');
+  const container = document.getElementById('heroesListButtonContainer');
+  const icons = ['listIcon', 'spinIcon', 'checkIcon'].map((id) => document.getElementById(id));
 
-  listIcon.classList.remove('fadeOutIn');
-  spinIcon.classList.remove('fadeInOutSpin');
-  checkIcon.classList.remove('fadeInOut');
+  icons.forEach((icon) => {
+    icon.classList.remove('fadeOutIn', 'fadeInOutSpin', 'fadeInOut');
+    icon.addEventListener('animationstart', () => (container.style.pointerEvents = 'none'));
+    icon.addEventListener('animationend', () => (container.style.pointerEvents = 'auto'));
+  });
 
   setTimeout(() => {
-    listIcon.classList.add('fadeOutIn');
-    spinIcon.classList.add('fadeInOutSpin');
-    checkIcon.classList.add('fadeInOut');
+    icons[0].classList.add('fadeOutIn');
+    icons[1].classList.add('fadeInOutSpin');
+    icons[2].classList.add('fadeInOut');
   }, 50);
 }
 

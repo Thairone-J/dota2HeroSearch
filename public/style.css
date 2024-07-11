@@ -69,11 +69,17 @@
   position: absolute;
   width: 70%;
   height: 70%;
-}
+  transition: filter 300ms ease;
+  cursor: pointer;
 
+}
+.heroes-list-button-container:hover img {
+  filter: brightness(0) invert(1);
+}
 .list-icon {
   opacity: 1;
 }
+
 .spin-icon {
   opacity: 0;
 }
