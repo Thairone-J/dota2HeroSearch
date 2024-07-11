@@ -47,9 +47,22 @@ function renderHeroesListButton() {
   const heroesListButtonContainer = document.createElement('div');
   heroesListButtonContainer.className = ' heroes-list-button-container';
   heroesListButtonContainer.id = 'heroesListButtonContainer';
-  const icon = document.createElement('img');
-  icon.src = './images/icons/menu.svg';
-  heroesListButtonContainer.appendChild(icon);
+  const listIcon = document.createElement('img');
+  listIcon.src = './images/icons/menu.svg';
+  listIcon.className = 'list-icon';
+  listIcon.id = 'listIcon';
+
+  const spinIcon = document.createElement('img');
+  spinIcon.src = './images/icons/spin_arrow.svg';
+  spinIcon.className = 'spin-icon';
+  spinIcon.id = 'spinIcon';
+
+  const checkIcon = document.createElement('img');
+  checkIcon.src = './images/icons/check.svg';
+  checkIcon.className = 'check-icon';
+  checkIcon.id = 'checkIcon';
+
+  heroesListButtonContainer.append(listIcon, spinIcon, checkIcon);
 
   const userSection = document.getElementById('userSectionContainer');
   userSection.appendChild(heroesListButtonContainer);
@@ -486,9 +499,9 @@ async function loadHeroes() {
 }
 
 async function saveHero() {
-  renderSavedAnimation();
   if (tempHero) {
     getInputs();
+
     const hero = {
       id: tempHero.id,
       name: tempHero.name,
@@ -505,6 +518,7 @@ async function saveHero() {
     const heroesIds = new Set(defaultHeroList.map((item) => item.id));
     const heroExists = idExists(heroesIds, hero.id);
     if (heroExists) {
+      renderSavedAnimation();
       await updateHero(hero);
       renderHomePage();
 
@@ -522,40 +536,12 @@ async function saveHero() {
       alert('image, attributes and main attribute are required to create a new Hero!');
       return;
     }
-
+    renderSavedAnimation();
     await saveNewHero(hero);
     renderHomePage();
 
     loadHeroes();
   }
-}
-
-function renderSavedAnimation() {
-  const listButtonContainer = document.getElementById('heroesListButtonContainer');
-  const listIcon = listButtonContainer.querySelector('img');
-  listIcon.style.animation = 'fadeOut 300ms ease-out forwards';
-  const spinArrowIcon = document.createElement('img');
-  spinArrowIcon.src = './images/icons/spin_arrow.svg';
-  spinArrowIcon.style.animation = 'fadeIn 300ms ease-out forwards,rotate 2s ease-out forwards';
-  setTimeout(() => {
-    listButtonContainer.appendChild(spinArrowIcon);
-  }, 310);
-
-  const greenCheckIcon = document.createElement('img');
-  greenCheckIcon.src = './images/icons/green_check.svg';
-  greenCheckIcon.style.animation = 'fadeInBlur 500ms ease-out forwards';
-
-  setTimeout(() => {
-    listButtonContainer.appendChild(greenCheckIcon);
-  }, 2200);
-
-  setTimeout(() => {
-    greenCheckIcon.style.animation = 'fadeOutBlur 400ms ease-out forwards';
-  }, 3500);
-
-  setTimeout(() => {
-    listIcon.style.animation = 'fadeInBlur 300ms ease-out forwards';
-  }, 3850);
 }
 
 async function updateHero(hero) {
@@ -659,5 +645,22 @@ function getInputs() {
     };
   }
 }
+
+function renderSavedAnimation() {
+  const listIcon = document.getElementById('listIcon');
+  const spinIcon = document.getElementById('spinIcon');
+  const checkIcon = document.getElementById('checkIcon');
+
+  listIcon.classList.remove('fadeOutIn');
+  spinIcon.classList.remove('fadeInOutSpin');
+  checkIcon.classList.remove('fadeInOut');
+
+  setTimeout(() => {
+    listIcon.classList.add('fadeOutIn');
+    spinIcon.classList.add('fadeInOutSpin');
+    checkIcon.classList.add('fadeInOut');
+  }, 50);
+}
+
 //
 //
