@@ -153,6 +153,58 @@ function renderSaveButton() {
   controlsContainer.appendChild(saveButtonContainer);
 }
 
+function renderDeletePopUp() {
+  if (!tempHero || tempHero.name === 'New Hero') {
+    return;
+  }
+
+  const body = document.body;
+
+  const fadeBlackScreen = document.createElement('div');
+  fadeBlackScreen.className = 'fade-black-screen';
+  fadeBlackScreen.id = 'fadeBlackScreen';
+  const deletePopUp = document.createElement('div');
+  deletePopUp.className = 'delete-popup';
+  deletePopUp.id = 'deletePopUp';
+  body.appendChild(fadeBlackScreen);
+  fadeBlackScreen.appendChild(deletePopUp);
+  const heroImg = document.createElement('div');
+  heroImg.className = 'hero-img';
+  heroImg.style.backgroundImage = `url(${tempHero.imageVert})`;
+  heroImg.style.backgroundSize = 'cover';
+  const msgContainer = document.createElement('div');
+  msgContainer.className = 'msg-container';
+  const message = document.createElement('p');
+  message.textContent = `Delete ${tempHero.name}?`;
+  msgContainer.appendChild(message);
+
+  deletePopUp.appendChild(msgContainer);
+
+  deletePopUp.appendChild(heroImg);
+
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.className = 'buttons-container';
+
+  const confirmButton = document.createElement('div');
+  confirmButton.className = 'confirm-button';
+  const cancelButton = document.createElement('div');
+  cancelButton.className = 'cancel-button';
+  cancelButton.textContent = 'No, thanks';
+  confirmButton.textContent = 'DELETE';
+
+  confirmButton.addEventListener('click', () => {
+    body.removeChild(fadeBlackScreen);
+    deleteHero();
+  });
+
+  cancelButton.addEventListener('click', () => {
+    body.removeChild(fadeBlackScreen);
+  });
+
+  buttonsContainer.append(cancelButton, confirmButton);
+  deletePopUp.appendChild(buttonsContainer);
+}
+
 function renderDeleteButton() {
   const controlsContainer = document.getElementById('controlsContainer');
   const deleteButtonContainer = document.createElement('div');
@@ -161,7 +213,7 @@ function renderDeleteButton() {
   deleteIcon.src = './images/icons/delete.svg';
   deleteButtonContainer.appendChild(deleteIcon);
   deleteButtonContainer.addEventListener('click', () => {
-    deleteHero();
+    renderDeletePopUp();
   });
   controlsContainer.appendChild(deleteButtonContainer);
 }

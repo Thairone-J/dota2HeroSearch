@@ -6,6 +6,100 @@
   margin: 0;
 }
 
+.fade-black-screen {
+  background-color: rgba(0, 0, 0, 0.843);
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.delete-popup {
+  display: grid;
+  margin-top: 150px;
+  border-radius: 10px;
+  width: 450px;
+  height: 200px;
+  background-color: rgb(25, 33, 54);
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.delete-popup .buttons-container {
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.delete-popup .buttons-container .cancel-button {
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  height: 35px;
+  border-radius: 25px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ffffff;
+  background-color: transparent;
+}
+
+.delete-popup .buttons-container .cancel-button:hover {
+  background-color: #5151516b;
+}
+
+.delete-popup .buttons-container .confirm-button {
+  cursor: pointer;
+  justify-content: center;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  background-color: rgb(194, 21, 21);
+  width: 45%;
+  height: 35px;
+  border-radius: 25px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(194, 21, 21);
+}
+
+.delete-popup .buttons-container .confirm-button:hover {
+  background-color: rgb(233, 36, 36);
+  border-color: rgb(233, 36, 36);
+}
+
+.delete-popup .hero-img {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+
+  width: 100%;
+  height: 100%;
+}
+
+.delete-popup .msg-container {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.msg-container p {
+  font-size: 1.7rem;
+
+  margin-left: 10px;
+  margin-top: 25px;
+}
+
 .main-container {
   background-image: url('./images/dotaMainBG.jpg');
   background-size: cover;
@@ -71,13 +165,14 @@
   height: 70%;
   transition: filter 300ms ease;
   cursor: pointer;
+}
 
-}
-.heroes-list-button-container:hover img {
-  filter: brightness(0) invert(1);
-}
-.list-icon {
+.heroes-list-button-container:hover .list-icon {
   opacity: 1;
+}
+
+.list-icon {
+  opacity: 0.405;
 }
 
 .spin-icon {
@@ -426,7 +521,7 @@
 
 @keyframes fadeOutIn {
   0% {
-    opacity: 1;
+    opacity: 0.405;
   }
   6.25% {
     opacity: 0;
@@ -436,7 +531,7 @@
     opacity: 0;
   }
   100% {
-    opacity: 1;
+    opacity: 0.405;
   }
 }
 
