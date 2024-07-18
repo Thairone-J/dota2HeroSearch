@@ -17,6 +17,8 @@ const queries = [
   'CREATE DATABASE IF NOT EXISTS ' + process.env.DB_NAME,
   'USE ' + process.env.DB_NAME,
   'DROP TABLE IF EXISTS heroes',
+  'DROP TABLE IF EXISTS users',
+  'DROP TABLE IF EXISTS user_heroes',
 
   `CREATE TABLE heroes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,6 +29,21 @@ const queries = [
     intel INT NOT NULL,
     image_vert VARCHAR(255) NOT NULL
   )`,
+
+  `CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+  )`,
+
+  `CREATE TABLE user_heroes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    hero_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (hero_id) REFERENCES heroes(id),
+    UNIQUE (user_id, hero_id)
+  )`
 ];
 
 const getQueryName = (query) => {
