@@ -1,11 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import heroesRoutes from './routes/heroes.js';
 import usersRoutes from './routes/users.js';
-
-dotenv.config();
 
 const app = express();
 app.use(cors());
