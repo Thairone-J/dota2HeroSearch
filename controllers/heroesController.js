@@ -24,11 +24,12 @@ export const createHero = async (req, res) => {
 };
 
 export const updateHero = async (req, res) => {
-  const { id, name, main_attr, agi, str, intel, image_vert } = req.body;
+  const { name, main_attr, agi, str, intel, image_vert } = req.body;
+  const { heroId } = req.params
   const query =
     'UPDATE heroes SET name = ?, main_attr = ?, agi = ?, str = ?, intel = ?, image_vert = ? WHERE id = ?';
   try {
-    await pool.query(query, [name, main_attr, agi, str, intel, image_vert, id]);
+    await pool.query(query, [name, main_attr, agi, str, intel, image_vert, heroId]);
     res.send('Hero updated');
   } catch (err) {
     console.error('Error updating hero:', err);
@@ -37,10 +38,10 @@ export const updateHero = async (req, res) => {
 };
 
 export const deleteHero = async (req, res) => {
-  const { id } = req.body;
+  const { heroId } = req.params
   const query = 'DELETE FROM heroes WHERE id = ?';
   try {
-    await pool.query(query, [id]);
+    await pool.query(query, [heroId]);
     res.send('Hero deleted');
   } catch (err) {
     console.error('Error deleting hero:', err);

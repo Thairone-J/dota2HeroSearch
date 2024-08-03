@@ -445,13 +445,13 @@ function renderAttributesContainer() {
 function renderAttributes(hero) {
   const attributesContainer = document.getElementById('attributesContainer');
 
-  const AttributesData = {
+  const attributesData = {
     agility: hero.agi,
     strength: hero.str,
     intelligence: hero.intel,
   };
 
-  Object.keys(AttributesData).forEach((attr) => {
+  Object.keys(attributesData).forEach((attr) => {
     const attrRow = document.createElement('div');
     attrRow.className = 'attr-row';
     attrRow.id = 'attrRow';
@@ -481,7 +481,7 @@ function renderAttributes(hero) {
     value.className = 'value';
     value.id = `${attr}Value`;
     value.contentEditable = 'true';
-    value.textContent = AttributesData[attr];
+    value.textContent = attributesData[attr];
     attrRow.appendChild(value);
     heroCard.addEventListener('mouseleave', () => {
       if (document.activeElement === value) {
@@ -515,6 +515,7 @@ function searchHero(queryHero) {
     loadHeroes();
     return;
   }
+  // Could use '.filter' and list all heroes
   let result = defaultHeroList.find((hero) =>
     hero.name.toLowerCase().startsWith(queryHero.toLowerCase())
   );
@@ -660,25 +661,25 @@ async function deleteHero() {
     alert('User not logged.');
     return;
   }
-  if (tempHero && tempHero.id) {
-    try {
-      const response = await fetch(`${BASE_URL}/heroes`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id: tempHero.id }),
-      });
+  if (!tempHero && !tempHero.id) return
+  try {
+    const response = await fetch(`${BASE_URL}/heroes`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ id: tempHero.id }),
+    });
 
-      const data = await response.text();
-      console.info(data);
-      renderHomePage();
-      loadHeroes();
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    const data = await response.text();
+    console.info(data);
+    renderHomePage();
+    loadHeroes();
+  } catch (error) {
+    console.error('Error:', error);
   }
+
 }
 // 👇    👇    USER AUTH  👇    👇
 //
@@ -840,6 +841,3 @@ function renderSavedAnimation() {
     icons[2].classList.add('fadeInOut');
   }, 50);
 }
-
-//
-//
