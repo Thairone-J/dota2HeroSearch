@@ -211,10 +211,14 @@ export async function deleteHero() {
       },
     });
 
-    const data = await response.text();
-    console.info(data);
-    renderHomePage();
+    if (!response.ok) {
+      const error = await response.text();
+      alert('Failed to delete hero: ' + error);
+      return;
+    }
+
     loadHeroes();
+    renderHomePage();
   } catch (error) {
     console.error('Error:', error);
   }
