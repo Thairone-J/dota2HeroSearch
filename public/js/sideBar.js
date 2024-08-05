@@ -1,5 +1,6 @@
 import { state } from '../script.js';
 import { deleteHero, saveHero } from './heroes.js';
+import { renderHomePage } from './userInterface.js';
 
 const sideBar = {
   renderControlsContainer: () => {

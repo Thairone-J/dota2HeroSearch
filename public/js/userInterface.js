@@ -1,8 +1,9 @@
-import { loadHeroes, searchHero } from './heroes.js';
+import { loadHeroes } from './heroes.js';
 import { login, register } from './auth.js';
 import { shuffleImg, clearAttrIcons, allowOnlyNumbers } from './utilities.js';
 import { state } from '../script.js';
 import sideBar from './sideBar.js';
+import searchBar from './searchBar.js';
 const app = document.getElementById('app');
 
 export function renderSideBar() {
@@ -69,7 +70,7 @@ function renderHeroesListButton() {
 export function renderHomePage() {
   removeHomeElementsIfExist();
   setTimeout(() => {
-    renderSearchContainer();
+    searchBar.renderSearchContainer();
   }, 600);
 
   function removeHomeElementsIfExist() {
@@ -90,79 +91,16 @@ export function renderHomePage() {
   }
 }
 
-// 👇    👇    SIDE CONTROLS    👇    👇
-//
-//
 
-// 👇    👇    SEARCH BAR    👇    👇
-//
-//
-function renderSearchContainer() {
-  const searchContainer = document.createElement('div');
-  searchContainer.className = 'search-container';
-  searchContainer.id = 'searchContainer';
-  app.appendChild(searchContainer);
-
-  const searchBarContainer = document.createElement('div');
-  searchBarContainer.className = 'search-bar-container';
-  searchBarContainer.id = 'searchBarContainer';
-
-  searchContainer.appendChild(searchBarContainer);
-
-  const resultContainer = document.createElement('div');
-  resultContainer.className = 'result-container';
-  resultContainer.id = 'resultContainer';
-
-  searchContainer.appendChild(resultContainer);
-
-  renderSearchBar();
-}
-
-function renderSearchBar() {
-  const searchBarContainer = document.getElementById('searchBarContainer');
-
-  const searchBar = document.createElement('div');
-  searchBar.className = 'search-bar';
-  searchBar.id = 'searchBar';
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.id = 'searchInput';
-  input.autocomplete = 'off';
-  input.placeholder = 'Search hero..';
-  const icon = document.createElement('img');
-  icon.src = './images/icons/search.svg';
-
-  input.addEventListener('input', function () {
-    if (input.value.trim() === '') {
-      clearResult();
-    } else {
-      searchHero(input.value);
-    }
-  });
-  searchBar.appendChild(input);
-  searchBar.appendChild(icon);
-  searchBarContainer.appendChild(searchBar);
-}
-
-export function clearResult() {
-  const resultContainer = document.getElementById('resultContainer');
-  const result = document.getElementById('result');
-  if (result) {
-    result.style.animation = 'fadeOutBlur 500ms ease-out forwards';
-    setTimeout(() => {
-      if (result && resultContainer.contains(result)) {
-        resultContainer.removeChild(result);
-      }
-    }, 300);
-  }
-}
-
+  
 function renderPreviewContainer() {
   const heroPreviewContainer = document.createElement('div');
   heroPreviewContainer.className = 'hero-preview-container';
   heroPreviewContainer.id = 'heroPreviewContainer';
   app.appendChild(heroPreviewContainer);
 }
+
+
 // 👇    👇    HERO CARD    👇    👇
 //
 //

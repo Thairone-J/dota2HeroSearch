@@ -61,3 +61,17 @@ export function renderSavedAnimation() {
     icons[2].classList.add('fadeInOut');
   }, 50);
 }
+
+
+export function clearResult() {
+  const resultContainer = document.getElementById('resultContainer');
+  const result = document.getElementById('result');
+  if (result) {
+    result.style.animation = 'fadeOutBlur 500ms ease-out forwards';
+    setTimeout(() => {
+      if (result && resultContainer.contains(result)) {
+        resultContainer.removeChild(result);
+      }
+    }, 300);
+  }
+}
