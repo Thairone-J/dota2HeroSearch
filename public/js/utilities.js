@@ -62,7 +62,6 @@ export function renderSavedAnimation() {
   }, 50);
 }
 
-
 export function clearResult() {
   const resultContainer = document.getElementById('resultContainer');
   const result = document.getElementById('result');

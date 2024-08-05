@@ -134,7 +134,6 @@ function renderDeleteButton() {
   controlsContainer.appendChild(deleteButtonContainer);
 }
 
-
 function renderUserSectionContainer() {
   const sideBarContainer = document.getElementById('sideBarContainer');
   const userSectionContainer = document.createElement('div');
@@ -185,7 +184,6 @@ function renderHeroesListButton() {
   const userSection = document.getElementById('userSectionContainer');
   userSection.appendChild(heroesListButtonContainer);
 }
-
 
 function renderLoginContainer() {
   const loginContainer = document.getElementById('loginContainer');
@@ -251,6 +249,5 @@ function renderLoginContainer() {
     buttonsContainer.appendChild(myHeroesButton);
   }
 }
-
 
 export default sideBar;
