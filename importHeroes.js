@@ -1,5 +1,6 @@
 import { createPool } from 'mysql2/promise';
 import heroes from './heroes.js';
+import 'dotenv/config';
 
 const pool = createPool({
   host: process.env.DB_HOST,
