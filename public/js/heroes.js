@@ -1,6 +1,7 @@
-import { getInputs, renderSavedAnimation } from './utilities.js';
+import { getInputs, renderSavedAnimation, clearResult } from './utilities.js';
 import { state } from '../script.js';
-import { clearResult, renderHeroCard, showHero, renderHomePage } from './userInterface.js';
+import { renderHomePage } from './userInterface.js';
+import { renderHeroCard, showHero } from './heroCard.js';
 
 const BASE_URL = 'http://localhost:3000';
 
