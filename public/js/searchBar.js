@@ -3,7 +3,12 @@ import { searchHero } from './heroes.js';
 
 const searchBar = {
   renderSearchContainer: () => {
-    const searchContainer = document.createElement('div');
+    let searchContainer = document.getElementById('searchContainer');
+
+    if (!searchContainer) {
+      searchContainer = document.createElement('div');
+    }
+   
     searchContainer.className = 'search-container';
     searchContainer.id = 'searchContainer';
     app.appendChild(searchContainer);

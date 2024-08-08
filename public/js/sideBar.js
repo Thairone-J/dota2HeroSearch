@@ -1,6 +1,8 @@
 import { state } from '../script.js';
-import { deleteHero, saveHero } from './heroes.js';
-import { renderHomePage, showHeroEditor } from './userInterface.js';
+import { deleteHero, saveHero, loadHeroes } from './heroes.js';
+import { renderHomePage } from './homePage.js';
+import { login, register } from './auth.js';
+import { renderHeroCard, showHero } from './heroCard.js';
 
 const sideBar = {
   renderSideBar: () => {
@@ -51,9 +53,25 @@ function renderCreateHeroButton() {
 
   controlsContainer.appendChild(createHeroButton);
   createHeroButton.addEventListener('click', function () {
-    showHeroEditor();
+    renderHeroEditor();
   });
 }
+
+
+function renderHeroEditor() {
+  if (!state.heroesDataAvaible) {
+    loadHeroes();
+  }
+
+  const emptyHero = { name: 'New Hero', mainAttr: undefined, agi: 0, str: 0, intel: 0 };
+
+  const heroPreviewContainer = document.getElementById('heroPreviewContainer');
+  if (!heroPreviewContainer) {
+    renderHeroCard();
+    showHero(emptyHero);
+  }
+}
+
 
 function renderSaveButton() {
   const saveButtonContainer = document.createElement('div');
@@ -70,7 +88,7 @@ function renderSaveButton() {
 }
 
 function renderDeletePopUp() {
-  if (!state.tempHero || state.tempHero.name === 'New Hero') {
+  if (!state.tmpHero || state.tmpHero.name === 'New Hero') {
     return;
   }
 
@@ -86,12 +104,12 @@ function renderDeletePopUp() {
   fadeBlackScreen.appendChild(deletePopUp);
   const heroImg = document.createElement('div');
   heroImg.className = 'hero-img';
-  heroImg.style.backgroundImage = `url(${state.tempHero.imageVert})`;
+  heroImg.style.backgroundImage = `url(${state.tmpHero.imageVert})`;
   heroImg.style.backgroundSize = 'cover';
   const msgContainer = document.createElement('div');
   msgContainer.className = 'msg-container';
   const message = document.createElement('p');
-  message.textContent = `Delete ${state.tempHero.name}?`;
+  message.textContent = `Delete ${state.tmpHero.name}?`;
   msgContainer.appendChild(message);
 
   deletePopUp.appendChild(msgContainer);

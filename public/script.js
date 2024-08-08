@@ -1,7 +1,7 @@
-import { renderHomePage } from './js/userInterface.js';
+import { renderHomePage } from './js/homePage.js';
 import sideBar from './js/sideBar.js';
 
-export const state = { defaultHeroList: [], heroesDataAvaible: false, tempHero: null };
+export const state = { defaultHeroList: [], heroesDataAvaible: false, tmpHero: null };
 
 console.info('Heroes data is avaible: ' + state.heroesDataAvaible);
 
