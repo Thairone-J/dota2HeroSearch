@@ -28,7 +28,7 @@ export function showHero(hero) {
   renderAttributesContainer();
   renderAttributes(hero);
   renderMainAttr(hero);
-  state.tempHero = {
+  state.tmpHero = {
     id: hero.id,
     name: hero.name,
     mainAttr: hero.mainAttr,
@@ -132,7 +132,7 @@ function renderAttributes(hero) {
         intelligence: 'intel',
       };
 
-      state.tempHero = { ...state.tempHero, mainAttr: attributeMap[attributeName] };
+      state.tmpHero = { ...state.tmpHero, mainAttr: attributeMap[attributeName] };
     });
 
     const value = document.createElement('div');

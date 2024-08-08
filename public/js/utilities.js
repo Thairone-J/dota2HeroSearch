@@ -3,7 +3,7 @@ import { state } from '../script.js';
 export function shuffleImg() {
   const imgVert =
     state.defaultHeroList[Math.floor(Math.random() * state.defaultHeroList.length)].imageVert;
-  state.tempHero = { ...state.tempHero, imageVert: imgVert };
+  state.tmpHero = { ...state.tmpHero, imageVert: imgVert };
   updateImgBg(imgVert);
 }
 
@@ -35,8 +35,8 @@ export function getInputs() {
   const heroPreviewContainer = document.getElementById('heroPreviewContainer');
 
   if (heroPreviewContainer) {
-    state.tempHero = {
-      ...state.tempHero,
+    state.tmpHero = {
+      ...state.tmpHero,
       name: document.querySelector('.hero-name').textContent,
       agi: parseInt(document.getElementById('agilityValue').textContent, 10) || 0,
       str: parseInt(document.getElementById('strengthValue').textContent, 10) || 0,

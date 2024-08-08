@@ -1,6 +1,6 @@
 import { getInputs, renderSavedAnimation, clearResult } from './utilities.js';
 import { state } from '../script.js';
-import { renderHomePage } from './userInterface.js';
+import { renderHomePage } from './homePage.js';
 import { renderHeroCard, showHero } from './heroCard.js';
 
 const BASE_URL = 'http://localhost:3000';
@@ -102,17 +102,17 @@ export async function saveHero() {
     return;
   }
 
-  if (state.tempHero) {
+  if (state.tmpHero) {
     getInputs();
 
     const hero = {
-      id: state.tempHero.id,
-      name: state.tempHero.name,
-      main_attr: state.tempHero.mainAttr,
-      agi: state.tempHero.agi,
-      str: state.tempHero.str,
-      intel: state.tempHero.intel,
-      image_vert: state.tempHero.imageVert,
+      id: state.tmpHero.id,
+      name: state.tmpHero.name,
+      main_attr: state.tmpHero.mainAttr,
+      agi: state.tmpHero.agi,
+      str: state.tmpHero.str,
+      intel: state.tmpHero.intel,
+      image_vert: state.tmpHero.imageVert,
     };
 
     function idExists(set, id) {
@@ -201,9 +201,9 @@ export async function deleteHero() {
     alert('User not logged.');
     return;
   }
-  if (!state.tempHero && !state.tempHero.id) return;
+  if (!state.tmpHero && !state.tmpHero.id) return;
   try {
-    const hero = { id: state.tempHero.id };
+    const hero = { id: state.tmpHero.id };
     const response = await fetch(`${BASE_URL}/heroes/${hero.id}`, {
       method: 'DELETE',
       headers: {
