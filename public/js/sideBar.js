@@ -3,7 +3,7 @@ import { deleteHero, saveHero, loadHeroes } from './heroes.js';
 import { renderHomePage } from './homePage.js';
 import { renderHeroCard, showHero } from './heroCard.js';
 import { renderLoginContainer } from './loginSection.js';
-
+import { renderSideBarMenu } from './sideBarMenu.js';
 const sideBar = {
   renderSideBar: () => {
     const sideBarContainer = document.createElement('div');
@@ -57,7 +57,6 @@ function renderCreateHeroButton() {
   });
 }
 
-
 function renderHeroEditor() {
   if (!state.heroesDataAvaible) {
     loadHeroes();
@@ -71,7 +70,6 @@ function renderHeroEditor() {
     showHero(emptyHero);
   }
 }
-
 
 function renderSaveButton() {
   const saveButtonContainer = document.createElement('div');
@@ -196,13 +194,11 @@ function renderHeroesListButton() {
   heroesListButtonContainer.append(listIcon, spinIcon, checkIcon);
 
   heroesListButtonContainer.addEventListener('click', () => {
-    renderLoginContainer();
+    renderSideBarMenu();
   });
 
   const userSection = document.getElementById('userSectionContainer');
   userSection.appendChild(heroesListButtonContainer);
 }
-
-
 
 export default sideBar;
