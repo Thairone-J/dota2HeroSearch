@@ -1,31 +1,68 @@
 const BASE_URL = 'http://localhost:3000';
 
 export async function login(username, password) {
-  const response = await fetch(`${BASE_URL}/users/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
-  });
-  if (response.ok) {
-    const { token } = await response.json();
-    localStorage.setItem('token', token);
-    alert('User logged in');
-    renderLoginContainer();
-  } else {
-    alert('Login failed');
+  try {
+    const response = await fetch(`${BASE_URL}/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      const { token, userProfilePicture } = await response.json();
+      localStorage.setItem('token', token);
+      localStorage.setItem('userProfilePicture', userProfilePicture);
+      console.log('User logged in successfully');
+    } else {
+      let errorMessage = 'Login failed: ';
+      const contentType = response.headers.get('Content-Type');
+
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const errorData = await response.json();
+          errorMessage += errorData.error || 'Unknown error';
+        } catch (err) {
+          errorMessage += 'Failed to parse error response';
+        }
+      } else {
+        errorMessage += await response.text();
+      }
+
+      console.error(errorMessage);
+    }
+  } catch (err) {
+    console.error(`Login failed: ${err.message}`);
   }
 }
 
-export async function register(username, password) {
-  const response = await fetch(`${BASE_URL}/users/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
-  });
-  if (response.ok) {
-    alert('User registered successfully');
-    renderLoginContainer();
-  } else {
-    alert('Registration failed');
+export async function register(username, password, profilePicture) {
+  try {
+    const response = await fetch(`${BASE_URL}/users/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, profilePicture }),
+    });
+
+    if (response.ok) {
+      console.log('User registered successfully');
+    } else {
+      let errorMessage = 'Registration failed: ';
+      const contentType = response.headers.get('Content-Type');
+
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const errorData = await response.json();
+          errorMessage += errorData.error || 'Unknown error';
+        } catch (err) {
+          errorMessage += 'Failed to parse error response';
+        }
+      } else {
+        errorMessage += await response.text();
+      }
+
+      console.error(errorMessage);
+    }
+  } catch (err) {
+    console.error(`Registration failed: ${err.message}`);
   }
 }

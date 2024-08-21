@@ -1,41 +1,40 @@
-import { state } from '../script.js';
 import { loadHeroes } from './heroes.js';
+import { state } from '../script.js';
+import { changeProfilePicture } from './profilePicture.js';
 
-export async function renderHeroesList(eventSource) {
-  const sideMenuContainer = document.getElementById('sideMenuContainer');
+const heroesList = {
+  render: async (element) => {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
 
-  const heroesListContainer = document.createElement('div');
-  heroesListContainer.id = 'heroesListContainer';
-  heroesListContainer.className = 'heroes-list-container';
+    if (!state.heroesDataAvaible) {
+      await loadHeroes();
+    }
 
-  sideMenuContainer.appendChild(heroesListContainer);
+    element.className = '';
+    element.className = 'heroes-img-list-container';
 
-  const heroesListGrid = document.createElement('div');
-  heroesListGrid.id = 'heroesListGrid';
-  heroesListGrid.className = 'heroes-list-grid';
+    const imageListGrid = document.createElement('div');
+    imageListGrid.id = 'imageListGrid';
+    imageListGrid.className = 'image-list-grid';
+    element.appendChild(imageListGrid);
+    for (let i = 0; i < state.defaultHeroList.length; i++) {
+      const item = document.createElement('img');
+      item.src = `${state.defaultHeroList[i].imageVert}`;
+      item.className = 'list-item';
+      imageListGrid.appendChild(item);
+      item.addEventListener('click', () => {
+        state.userProfilePicture = saveImgPath(item);
+        changeProfilePicture();
+      });
+    }
+  },
+};
 
-  heroesListContainer.appendChild(heroesListGrid);
+const saveImgPath = (img) => {
+  const index = img.src.indexOf('images/');
+  return img.src.substring(index);
+};
 
-  switch (eventSource) {
-    case 'changeUserPicture':
-      if (!state.heroesDataAvaible) {
-        await loadHeroes();
-      }
-
-      for (let i = 0; i < state.defaultHeroList.length; i++) {
-        const item = document.createElement('div');
-        item.id = 'heroesListItem';
-        item.className = 'heroes-list-item';
-        item.style.backgroundImage = `url(${state.defaultHeroList[i].imageVert})`;
-        heroesListGrid.appendChild(item);
-      }
-      break;
-
-    case 'showUserHeroes':
-      alert('to do');
-      break;
-
-    default:
-      return;
-  }
-}
+export default heroesList;
