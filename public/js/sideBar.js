@@ -2,8 +2,11 @@ import { state } from '../script.js';
 import { deleteHero, saveHero, loadHeroes } from './heroes.js';
 import { renderHomePage } from './homePage.js';
 import { renderHeroCard, showHero } from './heroCard.js';
-import { renderLoginContainer } from './loginSection.js';
-import { renderSideBarMenu } from './sideBarMenu.js';
+import loginPage from './loginPage.js';
+
+
+
+
 const sideBar = {
   renderSideBar: () => {
     const sideBarContainer = document.createElement('div');
@@ -33,9 +36,9 @@ function renderHomeButton() {
   const homeButtonContainer = document.createElement('div');
   homeButtonContainer.className = 'control-button';
   homeButtonContainer.id = 'homeButtonContainer';
-  const homeIcon = document.createElement('img');
-  homeIcon.src = './images/icons/home.svg';
-  homeButtonContainer.appendChild(homeIcon);
+  const homeSearchIcon = document.createElement('img');
+  homeSearchIcon.src = './images/icons/search.svg';
+  homeButtonContainer.appendChild(homeSearchIcon);
   homeButtonContainer.addEventListener('click', function () {
     renderHomePage();
   });
@@ -157,7 +160,6 @@ function renderUserSectionContainer() {
   userSectionContainer.id = 'userSectionContainer';
   sideBarContainer.appendChild(userSectionContainer);
   renderHeroesListButton();
-  renderUserPicture();
 }
 
 function renderUserPicture() {
@@ -194,7 +196,11 @@ function renderHeroesListButton() {
   heroesListButtonContainer.append(listIcon, spinIcon, checkIcon);
 
   heroesListButtonContainer.addEventListener('click', () => {
-    renderSideBarMenu();
+    loginPage.render();
+
+
+    // alert('renderUserPicture()')
+    // renderUserPicture();
   });
 
   const userSection = document.getElementById('userSectionContainer');
