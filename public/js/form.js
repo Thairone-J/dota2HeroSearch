@@ -1,7 +1,8 @@
-import { handleBottomClick, handleTopClick } from './loginPage.js';
+import { closePopup, handleBottomClick, handleTopClick } from './loginPage.js';
 import { register, login } from './auth.js';
 import { chooseProfilePicture } from './profilePicture.js';
 import { state } from '../script.js';
+import pushNotification from './pushNotification.js';
 
 const form = {
   render: (element, btnText) => {
@@ -49,12 +50,21 @@ const form = {
       case 'REGISTER':
         profilePicture.addEventListener('click', chooseProfilePicture);
 
-        submitButton.addEventListener('click', () => {
+        submitButton.addEventListener('click', async () => {
           const username = getValues.username();
           const password = getValues.password();
           const picture = getValues.picture();
           if ((username, password, picture)) {
-            register(username, password, picture);
+            const result = await register(username, password, picture);
+            if (result.success) {
+              pushNotification.render(document.body, result.message);
+              closePopup(document.getElementById('bgContainerLogin'));
+            } else {
+              pushNotification.render(
+                document.getElementById('bgContainerLogin'),
+                'Error registering user'
+              );
+            }
           }
         });
         break;

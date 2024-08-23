@@ -63,7 +63,9 @@ export const handleBottomClick = () => {
   form.render(popupBottom, 'REGISTER');
 };
 
-function closePopup(container) {
+export function closePopup(container) {
+  state.userProfilePicture = 'images/default_pp.jpg';
+
   container.remove();
 }
 

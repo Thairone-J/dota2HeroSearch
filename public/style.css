@@ -139,7 +139,6 @@
   transition: background-color 200ms ease-in;
 }
 
-
 .initial-popup-top {
   cursor: pointer;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -149,15 +148,7 @@
   align-items: center;
   justify-content: center;
   transition: background-color 200ms ease-in;
-
-
 }
-
-
-
-
-
-
 
 .popup-bottom {
   cursor: pointer;
@@ -189,8 +180,7 @@
   border-radius: 100%;
 }
 
-
-.action-btns-container{
+.action-btns-container {
   grid-column: 1 / 2;
   justify-content: space-between;
   display: flex;
@@ -200,27 +190,15 @@
   width: 100%;
 }
 
-
-.action-btns-container img{
+.action-btns-container img {
   width: 40px;
   cursor: pointer;
 }
 
-
-
-.action-btns-container img:hover{
- transform: scale(95%);
- opacity: 0.8;
+.action-btns-container img:hover {
+  transform: scale(95%);
+  opacity: 0.8;
 }
-
-
-
-
-
-
-
-
-
 
 .login-form {
   border-style: none;
@@ -297,6 +275,30 @@
 
 .list-item:hover {
   transform: scale(95%);
+}
+
+.push-notification-container {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+
+  position: absolute;
+  z-index: 999999;
+  background-color: rgb(25, 33, 54);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-left: 100px;
+  bottom: 0;
+  border-radius: 8px;
+  width: 250px;
+  height: 50px;
+}
+
+.push-notification-container p {
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 1rem;
 }
 
 .main-container {

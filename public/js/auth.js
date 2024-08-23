@@ -44,7 +44,7 @@ export async function register(username, password, profilePicture) {
     });
 
     if (response.ok) {
-      console.log('User registered successfully');
+      return { success: true, message: 'Successfully registered user' };
     } else {
       let errorMessage = 'Registration failed: ';
       const contentType = response.headers.get('Content-Type');
@@ -55,14 +55,17 @@ export async function register(username, password, profilePicture) {
           errorMessage += errorData.error || 'Unknown error';
         } catch (err) {
           errorMessage += 'Failed to parse error response';
+          return { success: false, message: errorMessage };
         }
       } else {
         errorMessage += await response.text();
+        return { success: false, message: errorMessage };
       }
 
       console.error(errorMessage);
     }
   } catch (err) {
     console.error(`Registration failed: ${err.message}`);
+    return { success: false, message: err.message };
   }
 }
