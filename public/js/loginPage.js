@@ -1,3 +1,4 @@
+import { state } from '../script.js';
 import form from './form.js';
 import profilePicture from './profilePicture.js';
 
@@ -20,7 +21,7 @@ const loginPage = {
 
       const popupTop = document.createElement('div');
       popupTop.id = 'popupTop';
-      popupTop.className = 'popup-top';
+      popupTop.className = 'initial-popup-top';
       popupTop.classList.add('login-top');
       const popupBottom = document.createElement('div');
       popupBottom.id = 'popupBottom';
@@ -46,12 +47,17 @@ const loginPage = {
 };
 
 export const handleTopClick = () => {
+  const popupTop = document.getElementById('popupTop');
+  popupTop.classList.remove('initial-popup-top');
+  popupTop.classList.add('popup-top');
   profilePicture.render(popupTop);
   form.render(popupBottom, 'LOGIN');
-
 };
 
 export const handleBottomClick = () => {
+  const popupTop = document.getElementById('popupTop');
+  popupTop.classList.remove('initial-popup-top');
+  popupTop.classList.add('popup-top');
   profilePicture.render(popupTop);
 
   form.render(popupBottom, 'REGISTER');

@@ -131,11 +131,33 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: white;
   font-size: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 60px;
+  align-items: center;
+  justify-items: center;
+  transition: background-color 200ms ease-in;
+}
+
+
+.initial-popup-top {
+  cursor: pointer;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 200ms ease-in;
+
+
 }
+
+
+
+
+
+
 
 .popup-bottom {
   cursor: pointer;
@@ -157,11 +179,48 @@
 }
 
 .profile-picture {
+  position: relative;
+  align-self: center;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
   cursor: pointer;
   width: 150px;
   height: 150px;
   border-radius: 100%;
 }
+
+
+.action-btns-container{
+  grid-column: 1 / 2;
+  justify-content: space-between;
+  display: flex;
+  grid-row: 2 / 3;
+  padding-left: 25px;
+  padding-right: 25px;
+  width: 100%;
+}
+
+
+.action-btns-container img{
+  width: 40px;
+  cursor: pointer;
+}
+
+
+
+.action-btns-container img:hover{
+ transform: scale(95%);
+ opacity: 0.8;
+}
+
+
+
+
+
+
+
+
+
 
 .login-form {
   border-style: none;
@@ -239,20 +298,6 @@
 .list-item:hover {
   transform: scale(95%);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .main-container {
   background-image: url('./images/dotaMainBG.jpg');

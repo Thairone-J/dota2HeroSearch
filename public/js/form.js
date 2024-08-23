@@ -1,6 +1,6 @@
 import { handleBottomClick, handleTopClick } from './loginPage.js';
 import { register, login } from './auth.js';
-import { changeProfilePicture } from './profilePicture.js';
+import { chooseProfilePicture } from './profilePicture.js';
 import { state } from '../script.js';
 
 const form = {
@@ -47,7 +47,7 @@ const form = {
         });
         break;
       case 'REGISTER':
-        profilePicture.addEventListener('click', changeProfilePicture);
+        profilePicture.addEventListener('click', chooseProfilePicture);
 
         submitButton.addEventListener('click', () => {
           const username = getValues.username();
@@ -60,7 +60,7 @@ const form = {
         break;
 
       default:
-        alert('none');
+        console.error('Missing Arguments..');
         return;
     }
 

@@ -1,6 +1,6 @@
 import { loadHeroes } from './heroes.js';
 import { state } from '../script.js';
-import { changeProfilePicture } from './profilePicture.js';
+import { chooseProfilePicture } from './profilePicture.js';
 
 const heroesList = {
   render: async (element) => {
@@ -26,7 +26,7 @@ const heroesList = {
       imageListGrid.appendChild(item);
       item.addEventListener('click', () => {
         state.userProfilePicture = saveImgPath(item);
-        changeProfilePicture();
+        chooseProfilePicture();
       });
     }
   },

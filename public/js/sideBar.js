@@ -4,9 +4,6 @@ import { renderHomePage } from './homePage.js';
 import { renderHeroCard, showHero } from './heroCard.js';
 import loginPage from './loginPage.js';
 
-
-
-
 const sideBar = {
   renderSideBar: () => {
     const sideBarContainer = document.createElement('div');
@@ -197,7 +194,6 @@ function renderHeroesListButton() {
 
   heroesListButtonContainer.addEventListener('click', () => {
     loginPage.render();
-
 
     // alert('renderUserPicture()')
     // renderUserPicture();
