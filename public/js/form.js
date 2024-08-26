@@ -1,7 +1,8 @@
-import { handleBottomClick, handleTopClick } from './loginPage.js';
+import { closePopup, handleBottomClick, handleTopClick } from './loginPage.js';
 import { register, login } from './auth.js';
-import { changeProfilePicture } from './profilePicture.js';
+import { chooseProfilePicture } from './profilePicture.js';
 import { state } from '../script.js';
+import pushNotification from './pushNotification.js';
 
 const form = {
   render: (element, btnText) => {
@@ -40,27 +41,40 @@ const form = {
         profilePicture.style.cursor = 'default';
         profilePicture.src = `../images/default_pp.jpg`;
 
-        submitButton.addEventListener('click', () => {
+        submitButton.addEventListener('click', async () => {
           const username = getValues.username();
           const password = getValues.password();
-          login(username, password);
+          const result = await login(username, password);
+          if (result.success) {
+            pushNotification.render(document.body, result.message);
+          }
         });
         break;
       case 'REGISTER':
-        profilePicture.addEventListener('click', changeProfilePicture);
+        profilePicture.addEventListener('click', chooseProfilePicture);
 
-        submitButton.addEventListener('click', () => {
+        submitButton.addEventListener('click', async () => {
           const username = getValues.username();
           const password = getValues.password();
           const picture = getValues.picture();
-          if ((username, password, picture)) {
-            register(username, password, picture);
+
+          if (!username || !password || !picture) {
+            pushNotification.render(document.body, 'All fields are required');
+            return;
+          }
+          const result = await register(username, password, picture);
+
+          if (result.success) {
+            pushNotification.render(document.body, result.message);
+            closePopup(document.getElementById('bgContainerLogin'));
+          } else {
+            pushNotification.render(document.body, 'Error registering user');
           }
         });
         break;
 
       default:
-        alert('none');
+        console.error('Missing Arguments..');
         return;
     }
 
@@ -82,8 +96,7 @@ const getValues = {
   },
   picture: () => {
     if (state.userProfilePicture === 'images/default_pp.jpg') {
-      console.error('Choice a profile picture.');
-      return null;
+      return undefined;
     }
 
     return state.userProfilePicture;

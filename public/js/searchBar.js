@@ -8,7 +8,7 @@ const searchBar = {
     if (!searchContainer) {
       searchContainer = document.createElement('div');
     }
-   
+
     searchContainer.className = 'search-container';
     searchContainer.id = 'searchContainer';
     app.appendChild(searchContainer);

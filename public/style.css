@@ -131,6 +131,19 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: white;
   font-size: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 60px;
+  align-items: center;
+  justify-items: center;
+  transition: background-color 200ms ease-in;
+}
+
+.initial-popup-top {
+  cursor: pointer;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,10 +170,34 @@
 }
 
 .profile-picture {
+  position: relative;
+  align-self: center;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
   cursor: pointer;
   width: 150px;
   height: 150px;
   border-radius: 100%;
+}
+
+.action-btns-container {
+  grid-column: 1 / 2;
+  justify-content: space-between;
+  display: flex;
+  grid-row: 2 / 3;
+  padding-left: 25px;
+  padding-right: 25px;
+  width: 100%;
+}
+
+.action-btns-container img {
+  width: 40px;
+  cursor: pointer;
+}
+
+.action-btns-container img:hover {
+  transform: scale(95%);
+  opacity: 0.8;
 }
 
 .login-form {
@@ -240,19 +277,29 @@
   transform: scale(95%);
 }
 
+.push-notification-container {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
 
+  position: absolute;
+  z-index: 999999;
+  background-color: rgb(25, 33, 54);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-left: 100px;
+  bottom: 0;
+  border-radius: 8px;
+  width: 250px;
+  height: 50px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.push-notification-container p {
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 1rem;
+}
 
 .main-container {
   background-image: url('./images/dotaMainBG.jpg');
@@ -285,6 +332,110 @@
   animation: fadeIn 1s ease-out;
   display: grid;
   grid-template-rows: 1fr 1fr;
+}
+
+.profile-picture-sidebar {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: solid 2px rgb(25, 33, 54);
+  box-shadow: 0 0 10px rgba(0, 255, 247, 0.406); /* Brilho inicial */
+  transition: box-shadow 150ms ease-in;
+}
+
+.profile-picture-sidebar:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 247, 0.406); /* Brilho inicial */
+}
+
+.slide-list-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 50px 1fr;
+  position: absolute;
+  margin-left: 70px;
+  width: 400px;
+  height: 97%;
+  background-color: rgba(25, 33, 54, 0.445);
+  opacity: 0; /* Inicia invisível */
+  filter: blur(20px); /* Inicia com desfoque */
+  animation: slideRight 500ms ease forwards;
+}
+
+.heroes-grid {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  overflow-y: auto;
+}
+.heroes-grid img {
+  width: 100%;
+  height: 100%;
+}
+
+.heroes-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-img-list-item {
+  transition: transform 150ms ease-in;
+  cursor: pointer;
+}
+
+.hero-img-list-item:hover {
+  transform: scale(95%);
+}
+
+.nav-tabs-container {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row: 1fr;
+  gap: 1px;
+}
+.nav-tabs-container button {
+  font-size: 1.2rem;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(25, 33, 54);
+  border-style: none;
+  cursor: pointer;
+}
+
+.nav-tabs-container button:hover {
+  background-color: rgb(33, 44, 71);
+}
+
+.slide-left {
+  animation: slideLeft 500ms ease forwards;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(-3%);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1; /* Totalmente visível */
+    filter: blur(0);
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: translateX(-3%);
+    opacity: 0;
+    filter: blur(20px);
+  }
 }
 
 .user-section-container {
@@ -734,6 +885,19 @@
     grid-column: 1 / 2;
     grid-row: 2 / 3;
     transform: translateX(0);
+  }
+
+  .slide-list-container {
+    margin-top: 70px;
+    margin-bottom: 30px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 400px;
+    width: 200px;
+  }
+  .nav-tabs-container button {
+    font-size: 10px;
   }
 
   .user-section-container {
