@@ -1,5 +1,3 @@
-import { closePopup } from './loginPage.js';
-
 const pushNotification = {
   render: (element, msg) => {
     const existingContainer = document.getElementById('pushNotificationContainer');
@@ -16,7 +14,7 @@ const pushNotification = {
     element.append(container);
     setTimeout(() => {
       container.remove();
-    }, 2500);
+    }, 4000);
   },
 };
 

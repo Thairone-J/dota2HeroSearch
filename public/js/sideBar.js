@@ -13,6 +13,10 @@ const sideBar = {
     mainContainer.appendChild(sideBarContainer);
     renderControlsContainer();
     renderUserSectionContainer();
+    const token = localStorage.getItem('token');
+    if (token) {
+      renderUserPicture();
+    }
   },
 };
 
@@ -160,15 +164,11 @@ function renderUserSectionContainer() {
 }
 
 function renderUserPicture() {
-  const userPictureContainer = document.createElement('div');
-  const userPicture = document.createElement('img');
-  userPicture.className = 'user-picture';
-  userPicture.id = 'userPicture';
-  userPictureContainer.className = 'user-picture-container';
-  userPictureContainer.id = 'userPictureContainer';
-  userPictureContainer.appendChild(userPicture);
-  const userSection = document.getElementById('userSectionContainer');
-  userSection.appendChild(userPictureContainer);
+  const userSectionContainer = document.getElementById('userSectionContainer');
+  const picture = document.createElement('img');
+  picture.className = 'profile-picture-sidebar';
+  picture.src = `../${localStorage.getItem('userProfilePicture')}`;
+  userSectionContainer.append(picture);
 }
 
 function renderHeroesListButton() {
@@ -193,14 +193,72 @@ function renderHeroesListButton() {
   heroesListButtonContainer.append(listIcon, spinIcon, checkIcon);
 
   heroesListButtonContainer.addEventListener('click', () => {
-    loginPage.render();
-
-    // alert('renderUserPicture()')
-    // renderUserPicture();
+    if (!localStorage.getItem('token')) {
+      loginPage.render();
+    }
+    renderSlideContainer();
   });
 
   const userSection = document.getElementById('userSectionContainer');
   userSection.appendChild(heroesListButtonContainer);
 }
+
+function renderSlideContainer() {
+  const mainContainer = document.getElementById('mainContainer');
+  const existingContainer = document.getElementById('slideListcontainer');
+  if (existingContainer) {
+    existingContainer.classList.add('slide-left');
+
+    existingContainer.addEventListener('animationend', () => {
+      existingContainer.remove();
+    });
+
+    return;
+  }
+
+  const slideListcontainer = document.createElement('div');
+  slideListcontainer.id = 'slideListcontainer';
+  slideListcontainer.className = 'slide-list-container';
+  const heroesGrid = document.createElement('div');
+  heroesGrid.id = 'heroesGrid';
+  heroesGrid.className = 'heroes-grid';
+  const navTabsContainer = document.createElement('div');
+  navTabsContainer.id = 'navTabsContainer';
+  navTabsContainer.className = 'nav-tabs-container';
+  const userHeroesTab = document.createElement('button');
+  userHeroesTab.textContent = 'My Heroes';
+  const defaultHeroesTab = document.createElement('button');
+  defaultHeroesTab.textContent = 'Dota 2 Heroes';
+  defaultHeroesTab.addEventListener('click', () => {
+    heroList.renderDefaultListOn(heroesGrid);
+  });
+  navTabsContainer.append(userHeroesTab, defaultHeroesTab);
+
+  mainContainer.appendChild(slideListcontainer);
+  slideListcontainer.append(heroesGrid, navTabsContainer);
+}
+
+const heroList = {
+  renderUserListOn: (element) => {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+  },
+  renderDefaultListOn: async (element) => {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+    if (!state.heroesDataAvaible) {
+      await loadHeroes();
+    }
+    for (let i = 0; i < state.defaultHeroList.length; i++) {
+      const heroImg = document.createElement('img');
+      heroImg.id = 'heroImgListItem';
+      heroImg.className = 'hero-img-list-item';
+      heroImg.src = state.defaultHeroList[i].imageVert;
+      element.appendChild(heroImg);
+    }
+  },
+};
 
 export default sideBar;

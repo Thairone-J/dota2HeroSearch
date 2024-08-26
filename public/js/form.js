@@ -41,10 +41,13 @@ const form = {
         profilePicture.style.cursor = 'default';
         profilePicture.src = `../images/default_pp.jpg`;
 
-        submitButton.addEventListener('click', () => {
+        submitButton.addEventListener('click', async () => {
           const username = getValues.username();
           const password = getValues.password();
-          login(username, password);
+          const result = await login(username, password);
+          if (result.success) {
+            pushNotification.render(document.body, result.message);
+          }
         });
         break;
       case 'REGISTER':
@@ -54,17 +57,18 @@ const form = {
           const username = getValues.username();
           const password = getValues.password();
           const picture = getValues.picture();
-          if ((username, password, picture)) {
-            const result = await register(username, password, picture);
-            if (result.success) {
-              pushNotification.render(document.body, result.message);
-              closePopup(document.getElementById('bgContainerLogin'));
-            } else {
-              pushNotification.render(
-                document.getElementById('bgContainerLogin'),
-                'Error registering user'
-              );
-            }
+
+          if (!username || !password || !picture) {
+            pushNotification.render(document.body, 'All fields are required');
+            return;
+          }
+          const result = await register(username, password, picture);
+
+          if (result.success) {
+            pushNotification.render(document.body, result.message);
+            closePopup(document.getElementById('bgContainerLogin'));
+          } else {
+            pushNotification.render(document.body, 'Error registering user');
           }
         });
         break;
@@ -92,8 +96,7 @@ const getValues = {
   },
   picture: () => {
     if (state.userProfilePicture === 'images/default_pp.jpg') {
-      console.error('Choice a profile picture.');
-      return null;
+      return undefined;
     }
 
     return state.userProfilePicture;

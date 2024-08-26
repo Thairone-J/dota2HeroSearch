@@ -12,7 +12,7 @@ export async function login(username, password) {
       const { token, userProfilePicture } = await response.json();
       localStorage.setItem('token', token);
       localStorage.setItem('userProfilePicture', userProfilePicture);
-      console.log('User logged in successfully');
+      return { success: true, message: 'Success' };
     } else {
       let errorMessage = 'Login failed: ';
       const contentType = response.headers.get('Content-Type');
@@ -44,6 +44,7 @@ export async function register(username, password, profilePicture) {
     });
 
     if (response.ok) {
+      // Retorno de sucesso
       return { success: true, message: 'Successfully registered user' };
     } else {
       let errorMessage = 'Registration failed: ';
@@ -53,19 +54,23 @@ export async function register(username, password, profilePicture) {
         try {
           const errorData = await response.json();
           errorMessage += errorData.error || 'Unknown error';
+          // Retorno de erro para resposta JSON
+          return { success: false, message: errorMessage };
         } catch (err) {
           errorMessage += 'Failed to parse error response';
+          // Retorno de erro ao falhar ao parsear resposta JSON
           return { success: false, message: errorMessage };
         }
       } else {
+        // Adicionado o retorno faltante
         errorMessage += await response.text();
+        console.error(errorMessage);
         return { success: false, message: errorMessage };
       }
-
-      console.error(errorMessage);
     }
   } catch (err) {
     console.error(`Registration failed: ${err.message}`);
+    // Retorno de erro para exceção capturada
     return { success: false, message: err.message };
   }
 }
